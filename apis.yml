@@ -1,23 +1,170 @@
 aid: welcome-to-the-jungle
 name: Welcome to the Jungle
-description: 'Welcome to the Jungle is a company surfaced via the API Evangelist harvest backlog (source:
-  secondary-market) and added to the network as a stub for full-pipeline profiling.'
+description: 'Welcome to the Jungle is a Paris-headquartered employer-branding and hiring platform. Its
+  Welcome Hiring Suite bundles Welcome Employer Brand company showcases, Welcome ATS (historically shipped
+  as Welcome Kit), Welcome Job Matching and Welcome Sourcing, alongside the welcometothejungle.com job
+  board and media property. The company publishes the Welcome to the Jungle Solutions API — a token-gated
+  REST API over jobs, departments, offices, candidates, candidate emails, documents, comments, employer-branding
+  organizations, images, videos, analytics moves and WTTJ media articles — documented at developers.welcomekit.co
+  and served from www.welcomekit.co/api/v1/external.'
 url: https://raw.githubusercontent.com/api-evangelist/welcome-to-the-jungle/refs/heads/main/apis.yml
+image: https://avatars.githubusercontent.com/u/13100706?v=4
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-09-04'
 modified: '2026-09-04'
 tags:
 - Company
-apis: []
+- Human Resources
+- Recruiting
+- Applicant Tracking
+- Jobs
+- Employer Branding
+- Talent Acquisition
+- HR Tech
+- France
+apis:
+- aid: welcome-to-the-jungle-solutions-api
+  name: Welcome to the Jungle Solutions API
+  description: 'REST API over Welcome to the Jungle Solutions recruiting and employer-branding data.
+    Bearer-token (OAuth access token) authentication with a published scope model, JSON request and
+    response bodies, page/per_page pagination and an X-Total count header. Covers the Jobs API (jobs,
+    job dependencies, departments, offices), the Candidates API (candidates, comments, emails, documents,
+    current user), the Employer Branding API (organizations, images, videos, embed, tools, sectors),
+    the Analytics API (moves) and the Media API (WTTJ articles). Several endpoints — list all jobs,
+    list organizations, WTTJ articles — require a dedicated partnership.'
+  humanURL: https://developers.welcomekit.co/
+  image: https://avatars.githubusercontent.com/u/13100706?v=4
+  baseURL: https://www.welcomekit.co/api/v1/external
+  tags:
+  - Jobs
+  - Candidates
+  - Recruiting
+  - Employer Branding
+  - Applicant Tracking
+  properties:
+  - type: Documentation
+    url: https://developers.welcomekit.co/
+  - type: APIReference
+    url: https://developers.welcomekit.co/jobs-api/jobs
+  - type: GettingStarted
+    url: https://developers.welcomekit.co/master
+  - type: Authentication
+    url: authentication/welcome-to-the-jungle-authentication.yml
+  - type: OAuthScopes
+    url: scopes/welcome-to-the-jungle-scopes.yml
+  - type: ErrorCatalog
+    url: errors/welcome-to-the-jungle-problem-types.yml
+  - type: Conventions
+    url: conventions/welcome-to-the-jungle-conventions.yml
+  - type: RateLimits
+    url: rate-limits/welcome-to-the-jungle-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/welcome-to-the-jungle-lifecycle.yml
+  - type: X-MCPServerCandidate
+    url: mcp/welcome-to-the-jungle-mcp.yml
+- aid: welcome-to-the-jungle-welcomekit-graphql
+  name: Welcome Kit GraphQL API
+  description: 'Undocumented first-party GraphQL API for the Welcome Kit / Welcome ATS platform, live at
+    api.welcomekit.co/api/v1/graphql. Anonymous introspection is enabled and returned the complete schema
+    (95 types, 36 queries, 11 mutations) on 2026-09-04, while every data field is authorization-gated. It
+    is the only complete machine-readable contract Welcome to the Jungle publishes, and it exposes
+    capabilities the documented REST API does not — job counts and existence checks, salary benchmarking,
+    APEC and LinkedIn job-distribution integrations, and a per-object policies/permission model. Not
+    described on the developer portal, so it carries no published stability or support commitment.'
+  humanURL: https://developers.welcomekit.co/
+  image: https://avatars.githubusercontent.com/u/13100706?v=4
+  baseURL: https://api.welcomekit.co/api/v1/graphql
+  tags:
+  - GraphQL
+  - Applicant Tracking
+  - Jobs
+  - Recruiting
+  - Employer Branding
+  properties:
+  - type: GraphQL
+    url: graphql/welcome-to-the-jungle.graphql
+  - type: X-GraphQLIntrospection
+    url: graphql/welcome-to-the-jungle-introspection.json
+  - type: ToolCrosswalk
+    url: mcp/welcome-to-the-jungle-tool-crosswalk.yml
+  - type: DataModel
+    url: data-model/welcome-to-the-jungle-data-model.yml
+  - type: Authentication
+    url: authentication/welcome-to-the-jungle-authentication.yml
+  - type: Conventions
+    url: conventions/welcome-to-the-jungle-conventions.yml
+  - type: ErrorCatalog
+    url: errors/welcome-to-the-jungle-problem-types.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/welcome-to-the-jungle-domain-security.yml
 - type: Website
-  url: https://www.nasdaqprivatemarket.com/
+  url: https://www.welcometothejungle.com/en
+- type: DeveloperPortal
+  url: https://developers.welcomekit.co/
+- type: Documentation
+  url: https://developers.welcomekit.co/
+- type: APIReference
+  url: https://developers.welcomekit.co/jobs-api/jobs
+- type: GettingStarted
+  url: https://developers.welcomekit.co/master
+- type: Support
+  url: https://help.welcometothejungle.com/en
+- type: Blog
+  url: https://solutions.welcometothejungle.com/en/blog
+- type: GitHubOrganization
+  url: https://github.com/WTTJ
+- type: Pricing
+  url: https://solutions.welcometothejungle.com/en/pricing
+- type: SignUp
+  url: https://myaccount.welcometothejungle.com/signin
+- type: TermsOfService
+  url: https://solutions.welcometothejungle.com/en/terms-of-use
+- type: PrivacyPolicy
+  url: https://solutions.welcometothejungle.com/en/privacy-policy
+- type: StatusPage
+  url: https://status.welcomekit.co/
+- type: Plans
+  url: plans/welcome-to-the-jungle-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/welcome-to-the-jungle-rate-limits.yml
+- type: Authentication
+  url: authentication/welcome-to-the-jungle-authentication.yml
+- type: OAuthScopes
+  url: scopes/welcome-to-the-jungle-scopes.yml
+- type: ErrorCatalog
+  url: errors/welcome-to-the-jungle-problem-types.yml
+- type: Conventions
+  url: conventions/welcome-to-the-jungle-conventions.yml
+- type: Lifecycle
+  url: lifecycle/welcome-to-the-jungle-lifecycle.yml
+- type: Conformance
+  url: conformance/welcome-to-the-jungle-conformance.yml
+- type: LLMsTxt
+  url: llms/welcome-to-the-jungle-llms.txt
+- type: X-MCPServerCandidate
+  url: mcp/welcome-to-the-jungle-mcp.yml
+- type: Packages
+  url: packages/welcome-to-the-jungle-packages.yml
+- type: Components
+  url: components/welcome-to-the-jungle-components.yml
+- type: Compliance
+  url: conformance/welcome-to-the-jungle-conformance.yml
+- type: GraphQL
+  url: graphql/welcome-to-the-jungle.graphql
+- type: ToolCrosswalk
+  url: mcp/welcome-to-the-jungle-tool-crosswalk.yml
+- type: DataModel
+  url: data-model/welcome-to-the-jungle-data-model.yml
+x-enrichment:
+  date: '2026-09-04'
+  status: enriched
+  artifacts_added: 19
+  pass: local-v3

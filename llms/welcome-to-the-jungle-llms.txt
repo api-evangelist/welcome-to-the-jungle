@@ -1,0 +1,52 @@
+# Welcome to the Jungle Solutions API
+
+## Welcome to the Jungle Solutions API
+
+- [Introduction](https://developers.welcomekit.co/master.md)
+- [Authentication](https://developers.welcomekit.co/authentication.md)
+- [Scopes](https://developers.welcomekit.co/scopes.md)
+- [Errors and Status](https://developers.welcomekit.co/errors-and-status.md)
+- [Jobs](https://developers.welcomekit.co/jobs-api/jobs.md)
+- [Jobs dependencies](https://developers.welcomekit.co/jobs-api/jobs/get-jobs-dependencies.md)
+- [Languages](https://developers.welcomekit.co/jobs-api/jobs/get-jobs-dependencies/languages.md): This endpoint allows you to get an active language list.
+- [List available professions (deprecated)](https://developers.welcomekit.co/jobs-api/jobs/get-jobs-dependencies/list-available-professions.md): This endpoint lets you access to the list of all active professions.
+- [List all jobs](https://developers.welcomekit.co/jobs-api/jobs/list-all-jobs.md): This endpoint lets you retrieve all jobs for all organizations. It requires a dedicated partnership.
+- [List organization's jobs](https://developers.welcomekit.co/jobs-api/jobs/list-jobs.md): This endpoint lets you retrieve all jobs for a given organization.
+- [Retrieve a job](https://developers.welcomekit.co/jobs-api/jobs/retrieve-a-job.md): This endpoint allows you to get information about a particular job.
+- [Create a job](https://developers.welcomekit.co/jobs-api/jobs/create-a-job.md): This endpoint allows you to create a new job record.
+- [Update a job](https://developers.welcomekit.co/jobs-api/jobs/update-a-job.md): This endpoint allows you to update a job record.
+- [Update a job status](https://developers.welcomekit.co/jobs-api/jobs/update-a-job-status.md): This endpoint allows you to update a job status.
+- [Departments](https://developers.welcomekit.co/jobs-api/departments.md)
+- [List departments](https://developers.welcomekit.co/jobs-api/departments/list-departaments.md): This endpoint lets you retrieve all departments (aka teams) for a given organization. Departments are used on careers websites to organize job offers.
+- [Create a department](https://developers.welcomekit.co/jobs-api/departments/create-a-department.md): This endpoint lets you create new departments for a given organization\_reference
+- [Update a department](https://developers.welcomekit.co/jobs-api/departments/update-a-department.md): This endpoint lets you update departments for a given id.
+- [Retrieve a department](https://developers.welcomekit.co/jobs-api/departments/retrieve-a-departament.md): This endpoint allows you retrieve a given department
+- [Offices](https://developers.welcomekit.co/jobs-api/offices.md)
+- [List offices](https://developers.welcomekit.co/jobs-api/offices/list-offices.md): This endpoint allows you to get a list of all offices of the given organization.
+- [Create an office](https://developers.welcomekit.co/jobs-api/offices/create-an-office.md): This endpoint lets you create new offices for a given organization\_reference.
+- [Update an office](https://developers.welcomekit.co/jobs-api/offices/update-an-office.md): This endpoint lets you update existing offices for a given id.
+- [Retrieve an office](https://developers.welcomekit.co/jobs-api/offices/retrieve-an-office.md): This endpoint allows you to get info about given office.
+- [Candidates](https://developers.welcomekit.co/candidates-api/candidates.md)
+- [List candidates](https://developers.welcomekit.co/candidates-api/candidates/untitled.md): This endpoint lets you retrieve all candidates for a given job reference.
+- [Retrieve a candidate](https://developers.welcomekit.co/candidates-api/candidates/retrieve-a-candidate.md): This endpoint allows you to retrieve candidate info by his reference.
+- [Create a candidate](https://developers.welcomekit.co/candidates-api/candidates/create-a-candidate.md): This endpoint allows you create new candidates for a given job\_reference.
+- [Update a candidate](https://developers.welcomekit.co/candidates-api/candidates/update-a-candidate.md): This endpoint allows you update candidates for a given reference.
+- [Comment](https://developers.welcomekit.co/candidates-api/create-a-comment.md): This endpoint lets you create new comments for a given candidate\_reference.
+- [Emails](https://developers.welcomekit.co/candidates-api/emails.md)
+- [List candidate emails](https://developers.welcomekit.co/candidates-api/emails/list-candidate-emails.md): This endpoint allows you retrieve all emails for a given candidate reference.
+- [Create an email](https://developers.welcomekit.co/candidates-api/emails/create-an-email.md): This endpoint lets you create a new email for a given candidate\_reference.
+- [Documents](https://developers.welcomekit.co/candidates-api/documents.md)
+- [List candidate documents](https://developers.welcomekit.co/candidates-api/documents/list-candidate-documents.md): This endpoint lets you retrieve all attached documents for a given candidate\_reference.
+- [Attach documents to a candidate](https://developers.welcomekit.co/candidates-api/documents/attach-documents-to-a-candidate.md): This endpoint lets you attach new documents for a given candidate\_reference.
+- [Current user](https://developers.welcomekit.co/candidates-api/get-current-user.md)
+- [Organizations](https://developers.welcomekit.co/employer-branding-api/organizations.md)
+- [Retrieve Organization's info](https://developers.welcomekit.co/employer-branding-api/organizations/retrieve-organizations-info.md): This endpoint allows you to get information about an organization.
+- [List organizations](https://developers.welcomekit.co/employer-branding-api/organizations/list-organizations.md): This endpoint lets you retrieve all organizations according to their name or website url or cms site reference (one and only one of these parameters is required). It requires a dedicated partnership.
+- [Images](https://developers.welcomekit.co/employer-branding-api/untitled.md): This endpoint lets you access to the list of your images (scope images\_r) or to all images (scope su\_images\_r).
+- [videos](https://developers.welcomekit.co/employer-branding-api/list-videos.md): This endpoint lets you retrieve the list of videos for a particular company.
+- [Embed](https://developers.welcomekit.co/employer-branding-api/get-information-to-build-an-embed.md): It will allow you to build a widget on a career website based on your jobs and organization informations.
+- [Tools](https://developers.welcomekit.co/employer-branding-api/list-tools.md): This endpoint lets you retrieve all tools of Welcome To The Jungle
+- [Sectors](https://developers.welcomekit.co/employer-branding-api/list-available-sectors.md): This endpoint lets you access to the list of all active sectors.
+- [Moves](https://developers.welcomekit.co/analytics-api/list-moves.md): It allows to create dashboard or analyze your candidate pipeline.
+- [WTTJ articles](https://developers.welcomekit.co/media-api/list-wttj-articles.md): It allows to retrieve articles published on Welcome To The Jungle website. It requires a dedicated partnership.
+- [FAQ](https://developers.welcomekit.co/faq.md)

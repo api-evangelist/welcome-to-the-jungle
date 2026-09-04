@@ -1,0 +1,82 @@
+generated: '2026-09-04'
+method: searched
+source: 'https://registry.npmjs.org (metadata endpoint), https://github.com/WTTJ, and the Welcome to
+  the Jungle Solutions API docs at https://developers.welcomekit.co/'
+summary: 'Welcome to the Jungle publishes NO first-party client SDK for the Solutions API in any package
+  registry. npm, PyPI, RubyGems, Packagist, Maven Central, NuGet, crates.io and pkg.go.dev were checked
+  for welcomekit / wttj / welcome-to-the-jungle client libraries and none exists; the docs at
+  developers.welcomekit.co show raw curl only and name no SDK. The packages the company DOES publish
+  are open-source engineering libraries — a React design system and a set of Elixir libraries — none
+  of which wraps the Solutions API. No SDKs pointer is emitted, because sdk_count is a count of API
+  client libraries and this provider ships zero.'
+api_client_sdk_count: 0
+packages:
+- name: welcome-ui
+  registry: npm
+  url: https://www.npmjs.com/package/welcome-ui
+  repo: https://github.com/WTTJ/welcome-ui
+  official: true
+  api_client: false
+  kind: design-system
+  language: TypeScript
+  version: 10.6.6
+  published: '2026-09-02'
+  description: 'Customizable React design system (TypeScript, TailwindCSS, Ariakit) used by Welcome to
+    the Jungle for its own web apps. Actively maintained. Not a Solutions API client.'
+- name: '@welcome-ui/core'
+  registry: npm
+  url: https://www.npmjs.com/package/@welcome-ui/core
+  repo: https://github.com/WTTJ/welcome-ui
+  official: true
+  api_client: false
+  kind: design-system
+  language: TypeScript
+  version: 6.4.0
+  published: '2024-11-26'
+  description: 'Core utilities of the pre-v10 scoped @welcome-ui package family. Superseded by the
+    single welcome-ui package; last publish predates the current line by ~22 months.'
+- name: '@welcome-ui/button'
+  registry: npm
+  url: https://www.npmjs.com/package/@welcome-ui/button
+  repo: https://github.com/WTTJ/welcome-ui
+  official: true
+  api_client: false
+  kind: design-system
+  language: TypeScript
+  version: 6.6.0
+  published: '2024-12-09'
+  description: Scoped per-component package from the pre-v10 @welcome-ui family. Legacy line.
+- name: ecto_anon
+  registry: hex
+  url: https://hex.pm/packages/ecto_anon
+  repo: https://github.com/WTTJ/ecto_anon
+  official: true
+  api_client: false
+  kind: library
+  language: Elixir
+  version: null
+  published: null
+  note: 'Data anonymization for Ecto models — a general-purpose Elixir library open-sourced by WTTJ,
+    unrelated to the Solutions API. Version/date left null: hex.pm metadata was not read in this pass.'
+- name: algoliax
+  registry: hex
+  url: https://hex.pm/packages/algoliax
+  repo: https://github.com/WTTJ/algoliax
+  official: true
+  api_client: false
+  kind: library
+  language: Elixir
+  version: null
+  published: null
+  note: 'Algolia integration for Elixir applications, open-sourced by WTTJ. Not a Solutions API client.
+    Version/date left null: hex.pm metadata was not read in this pass.'
+absent:
+- registry: pypi
+  query: welcomekit
+  status: 404
+- registry: rubygems
+  query: welcomekit
+  status: 404
+- registry: packagist
+  query: wttj/welcomekit
+  status: 404

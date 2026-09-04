@@ -1,0 +1,210 @@
+generated: '2026-09-04'
+method: searched
+source: https://developers.welcomekit.co/ (Introduction, Authentication, Scopes, Errors and Status, Jobs, Candidates, FAQ) plus one live unauthenticated response observed 2026-09-04
+api: Welcome to the Jungle Solutions API
+base_url: https://www.welcomekit.co/api/v1/external
+summary: 'Cross-cutting runtime semantics for the Solutions API, read from the published documentation.
+  This is a conventional Rails-shaped JSON REST API: URI-versioned, bearer-authenticated, page/per_page
+  paginated with an X-Total count header, returning a two-field error envelope. It publishes no
+  idempotency mechanism, no rate-limit signal, no webhook or event surface, and no reversal operations
+  for its write endpoints.'
+authentication:
+  style: oauth-bearer-token
+  header: 'Authorization: Bearer <token>'
+  alternative: '?access_token=<token>'
+  self_service: false
+  detail: authentication/welcome-to-the-jungle-authentication.yml
+versioning:
+  style: uri-path
+  current: v1
+  pattern: https://www.welcomekit.co/api/v{n}/external/{resource}
+  header_negotiation: false
+  note: 'Only v1 has ever been published. No version-negotiation header, no dated versions, and no
+    published policy for how a v2 would be introduced.'
+pagination:
+  style: page-number
+  params:
+  - name: page
+    type: integer
+    description: Page offset.
+  - name: per_page
+    type: integer
+    description: Number of records per page.
+  response_shape: bare JSON array (no envelope, no cursor, no next/prev links)
+  total_count:
+    mechanism: response header
+    header: X-Total
+    documented_at: https://developers.welcomekit.co/faq
+    note: 'The FAQ names X-Total explicitly as the way to read a published-jobs count, and warns that
+      the default "Spontaneous job" is included in the total. Applies to the jobs collection; the docs
+      do not state whether every collection sets it.'
+  applies_to:
+  - GET /jobs
+  - GET /jobs/all
+  gaps:
+  - No Link header and no next/prev cursor — a client must increment page until a short page comes back.
+filtering:
+  incremental_sync:
+  - created_after
+  - updated_after
+  - published_after
+  note: 'All three take YYYY-MM-DD and are the intended mechanism for ATS synchronisation — this API''s
+    substitute for webhooks. Date granularity only; there is no timestamp/ETag high-water mark, so a
+    poller must re-fetch a whole day and de-duplicate on reference.'
+  other_filters:
+  - status
+  - contract_type
+  - organization_reference
+expansion:
+  style: boolean-include-flags
+  params:
+  - name: stages
+    description: Include job stages.
+  - name: websites
+    description: Include associated website URLs.
+  - name: office
+    description: Include the associated office description.
+  note: 'Opt-in expansion via boolean query flags rather than a generic expand=/fields= grammar. The
+    office flag additionally requires the offices_r (or su_offices_r) scope.'
+sparse_fieldsets:
+  supported: false
+metadata:
+  external_reference:
+    supported: true
+    description: 'Jobs and candidates carry an external_reference field for the caller''s own identifier,
+      which is the documented way to correlate records with an external ATS.'
+  arbitrary_metadata: false
+request_tracing:
+  header: X-Request-Id
+  direction: response
+  observed: '2026-09-04'
+  documented: false
+  note: 'Every API response carries x-request-id and x-runtime (observed live). Neither is documented,
+    so there is no published instruction to quote X-Request-Id in a support ticket — but it is the
+    correlation handle that exists.'
+error_envelope:
+  media_type: application/json
+  shape: '{"error": "<code>", "error_description": "<prose>"}'
+  rfc9457: false
+  detail: errors/welcome-to-the-jungle-problem-types.yml
+rate_limit_signaling:
+  documented: false
+  headers_observed: []
+  status_on_exhaustion: null
+  detail: rate-limits/welcome-to-the-jungle-rate-limits.yml
+  note: 'No X-RateLimit-*, RateLimit-* or Retry-After header was returned on a live unauthenticated
+    request, and no 429 appears in the published status-code table.'
+idempotency:
+  coverage: none
+  mechanism: null
+  header: null
+  scope: []
+  retention: null
+  evidence: 'https://developers.welcomekit.co/ — the full documentation set (fetched via llms-full.txt,
+    132KB, 2026-09-04) contains no occurrence of "idempoten", no Idempotency-Key header, and no
+    request-id-based replay protection. The write surface is POST /jobs, PUT /jobs/:reference,
+    PUT /jobs/:reference/update_status, POST/PUT /departments, POST/PUT /offices, POST/PUT /candidates,
+    POST /comments, POST /emails and POST /documents — none of them documents replay behaviour.'
+  note: 'Partial mitigation only: jobs and candidates accept a caller-supplied external_reference, so a
+    client can detect its own duplicate after the fact. That is a de-duplication key for the caller, not
+    a server-side idempotency guarantee, and the docs do not say the server rejects a repeat.'
+dry_run_mode:
+  supported: false
+  evidence: No dry-run, preview, validate-only or simulate parameter appears anywhere in the published documentation.
+reversibility:
+  grade: documented
+  summary: 'The API has a real write surface and one genuine reversal path — a job can be moved back out
+    of a published state through PUT /jobs/:reference/update_status — but no window is stated for it, and
+    the destructive operations have no reversal at all. Graded `documented`, not `verified`, because no
+    published page states a time limit, retention period or restore path.'
+  write_surfaces:
+  - operation: PUT /jobs/{reference}/update_status
+    action: Change a job's status (draft / published / archived and similar states).
+    reversal: 'Yes — the same endpoint. Status is a mutable field, so an unintended publish or archive is
+      undone by calling update_status again with the previous value.'
+    reversal_operation: PUT /jobs/{reference}/update_status
+    window: null
+    window_source: null
+    note: 'The docs do not state whether re-publishing a previously archived job restores its original
+      published_at, its position on welcometothejungle.com, or its candidate pipeline. Treat the reversal
+      as state-restoring, not as an undo.'
+  - operation: PUT /jobs/{reference}
+    action: Update a job record.
+    reversal: 'Overwrite-in-place with no version history and no published prior-value retrieval — a
+      client must have captured the previous payload itself to restore it.'
+    reversal_operation: PUT /jobs/{reference}
+    window: null
+    window_source: null
+  - operation: POST /jobs
+    action: Create a job record.
+    reversal: 'No DELETE endpoint is published for jobs. The closest available action is setting the job
+      to a non-published status via update_status; the record itself cannot be removed through the API.'
+    reversal_operation: PUT /jobs/{reference}/update_status
+    window: null
+    window_source: null
+  - operation: POST /candidates
+    action: Create a candidate against a job reference.
+    reversal: 'None published. There is no DELETE /candidates and no documented anonymisation or erasure
+      endpoint — notable for a GDPR-scope dataset held by a French controller. Erasure is a support
+      request, not an API call.'
+    reversal_operation: null
+    window: null
+    window_source: null
+  - operation: PUT /candidates/{reference}
+    action: Update a candidate.
+    reversal: Overwrite-in-place. No version history, no published prior-value retrieval.
+    reversal_operation: PUT /candidates/{reference}
+    window: null
+    window_source: null
+  - operation: POST /comments
+    action: Create a comment on a candidate.
+    reversal: None published — no DELETE or edit endpoint for comments.
+    reversal_operation: null
+    window: null
+    window_source: null
+  - operation: POST /emails
+    action: Create an email against a candidate.
+    reversal: 'None published, and an email that has been sent is not recallable in any case. This is the
+      highest-consequence irreversible write on the surface.'
+    reversal_operation: null
+    window: null
+    window_source: null
+  - operation: POST /documents
+    action: Attach documents to a candidate.
+    reversal: None published — no detach or delete endpoint for candidate documents.
+    reversal_operation: null
+    window: null
+    window_source: null
+  - operation: POST /departments, PUT /departments/{id}, POST /offices, PUT /offices/{id}
+    action: Create or update departments and offices.
+    reversal: 'Updates are overwrite-in-place and reversible by the caller re-sending prior values;
+      creates have no published delete.'
+    reversal_operation: PUT /departments/{id} | PUT /offices/{id}
+    window: null
+    window_source: null
+  agent_guidance: 'Before any POST on this API, assume the write is permanent. Nine of the ten documented
+    write operations have no server-side undo, and the one that does (job status) has no stated window.
+    An agent should capture the current representation with the matching GET before every PUT, because
+    that captured payload is the only rollback that exists.'
+second_surface:
+  kind: graphql
+  endpoint: https://api.welcomekit.co/api/v1/graphql
+  documented: false
+  detail: graphql/welcome-to-the-jungle-graphql.yml
+  crosswalk: mcp/welcome-to-the-jungle-tool-crosswalk.yml
+  divergences:
+  - 'Different error contract — GraphQL returns errors[] with extensions.code and path; REST returns {error, error_description}.'
+  - 'Different traffic control — GraphQL enforces a query-complexity budget of 150 (observed: the standard IntrospectionQuery was rejected at complexity 181); REST publishes no limit of any kind.'
+  - 'Different pagination — GraphQL takes OrderInput/OrderInputDirection arguments; REST uses page/per_page with an X-Total header.'
+  - 'Different capability set — 17 GraphQL fields have no REST equivalent and 15 REST operations have no GraphQL equivalent; see the crosswalk.'
+  - 'Introspection is anonymous while data is authorization-gated, so the full schema is readable without credentials but nothing in it can be called.'
+  note: 'Everything above this key describes the DOCUMENTED REST surface only. The GraphQL surface shares
+    the product but not the conventions, and the provider documents no relationship between them.'
+cross_links:
+  authentication: authentication/welcome-to-the-jungle-authentication.yml
+  scopes: scopes/welcome-to-the-jungle-scopes.yml
+  errors: errors/welcome-to-the-jungle-problem-types.yml
+  graphql: graphql/welcome-to-the-jungle-graphql.yml
+  crosswalk: mcp/welcome-to-the-jungle-tool-crosswalk.yml
+  lifecycle: lifecycle/welcome-to-the-jungle-lifecycle.yml
+  rate_limits: rate-limits/welcome-to-the-jungle-rate-limits.yml

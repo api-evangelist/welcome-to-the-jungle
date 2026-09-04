@@ -64,5 +64,68 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Welcome to the Jungle is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.nasdaqprivatemarket.com/
+Welcome to the Jungle is a Paris-headquartered employer-branding and hiring platform. Its Welcome Hiring
+Suite bundles Welcome Employer Brand company showcases, Welcome ATS (historically shipped as Welcome Kit),
+Welcome Job Matching and Welcome Sourcing, alongside the welcometothejungle.com job board and media
+property.
+
+## The API
+
+The company publishes the **Welcome to the Jungle Solutions API** — a token-gated REST API over recruiting
+and employer-branding data.
+
+- Developer portal / documentation: https://developers.welcomekit.co/
+- Base URL: `https://www.welcomekit.co/api/v1/external`
+- Authentication: OAuth bearer access token (`Authorization: Bearer …`, or `?access_token=…`), issued on
+  request through https://help.welcometothejungle.com/ — there is no self-service key.
+- Surface: Jobs (jobs, dependencies, departments, offices), Candidates (candidates, comments, emails,
+  documents, current user), Employer Branding (organizations, images, videos, embed, tools, sectors),
+  Analytics (moves) and Media (WTTJ articles) — 36 documented operations.
+- Several endpoints (`GET /jobs/all`, `GET /organizations`, `GET /cms/articles/all`) require a dedicated
+  partnership before the `su_*` / `cms_*` scopes are granted.
+
+## A second, undocumented API
+
+Probing `api.welcomekit.co` turned up a **live first-party GraphQL API** the developer portal never
+mentions:
+
+- Endpoint: `https://api.welcomekit.co/api/v1/graphql`
+- **Anonymous introspection is enabled** — the complete schema (95 types, 36 queries, 11 mutations) was
+  read with no credential on 2026-09-04 and is saved verbatim in `graphql/`.
+- **Data is authorization-gated** — every root field returns `unauthorized` without a token.
+- It enforces a query-complexity budget of 150 (the standard single-shot IntrospectionQuery is rejected
+  at complexity 181), so the schema was captured by walking `__type(name:)` one type at a time.
+
+This is the only complete machine-readable contract Welcome to the Jungle publishes, and it is **not the
+same API** as the documented REST surface. 17 GraphQL fields have no REST equivalent — including job
+counts, existence checks, salary benchmarking, APEC and LinkedIn job-distribution integrations, and a
+per-object `policies` permission model — while 15 REST operations have no GraphQL equivalent, notably the
+whole candidate email/document/comment write surface and the job status transition. The divergence is
+enumerated in `mcp/welcome-to-the-jungle-tool-crosswalk.yml`.
+
+Because it is undocumented, it carries no published version, deprecation policy, change notice or support
+commitment. Treat it as reachable, not as supported.
+
+## What this profile found
+
+**Published, and captured here:** a live introspectable GraphQL schema, a complete 29-scope OAuth scope reference, an error-code registry, a
+documented `page` / `per_page` + `X-Total` pagination model, incremental-sync filters
+(`created_after` / `updated_after` / `published_after`), two public status pages, an `llms.txt` on the
+docs host, a GDPR / UK GDPR privacy program with a named DPO, and an actively maintained open-source
+React design system (`welcome-ui`).
+
+**Not published, recorded as honest absences:** no OpenAPI, Swagger or AsyncAPI document on any host,
+no first-party API client SDK in any package registry, no MCP server, no A2A agent card, no
+`/.well-known/*` document on any host, no webhooks or event surface, no rate limits, no idempotency
+mechanism, no API changelog, no deprecation policy or `Sunset`/`Deprecation` headers, no SLA, no sandbox,
+no CLI, no security.txt, no vulnerability-disclosure program and no trust center.
+
+Nothing in this repository was generated to stand in for a contract the provider does not publish. The
+`mcp/` manifest is explicitly a **candidate** (`deployment.mode: none`) derived from the documented REST
+operations, and is pointed at with `X-MCPServerCandidate` rather than `MCPServer` so it cannot read as a
+live agent surface.
+
+- Company: https://www.welcometothejungle.com/en
+- Product: https://solutions.welcometothejungle.com/en/
+- Developer docs: https://developers.welcomekit.co/
+- GitHub: https://github.com/WTTJ

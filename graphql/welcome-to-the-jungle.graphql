@@ -1,0 +1,1039 @@
+# Welcome to the Jungle (Welcome Kit / Welcome ATS) GraphQL schema
+# Source: https://api.welcomekit.co/api/v1/graphql (anonymous introspection, 2026-09-04)
+
+"""The `DateTime` scalar type represents a date and time in the UTC timezone. The DateTime appears in a JSON response as an ISO8601 formatted string, including UTC timezone ("Z"). The parsed date and time string will be converted to UTC if there is an offset."""
+scalar DateTime
+
+"""The `FieldName` scalar type represents a camelCase string which will be transformed into snake_case to match DB table column name."""
+scalar FieldName
+
+"""The `Json` scalar type represents arbitrary json string data, represented as UTF-8 character sequences. The JSON type is most often used to represent a free-form human-readable json string."""
+scalar Json
+
+enum FiguresLevel {
+  C_LEVEL
+  HEAD_OF
+  INTERMEDIATE
+  JUNIOR
+  SENIOR
+  STAFF
+  TEAM_LEAD
+  VP
+}
+
+enum OrderInputDirection {
+  ASC
+  DESC
+}
+
+input ApecIntegrationInput {
+  enabled: Boolean = false
+  legalCompanyName: String!
+  nafCode: String!
+  siret: String!
+}
+
+input ApplicationFieldInput {
+  mode: String
+  name: String
+}
+
+input CreateJobInput {
+  apecIntegrationEnabled: Boolean
+  applicationFields: [ApplicationFieldInput]
+  applyUrl: String
+  companyDescription: String
+  contractDurationMax: Int
+  contractDurationMin: Int
+  contractType: String!
+  departmentId: Int
+  description: String!
+  duplicateFromId: Int
+  educationLevel: String
+  eventServiceIds: [Int]
+  experienceLevel: String
+  jobReviewCriteria: [JobReviewCriterionInput]
+  jobStages: [JobStageInput]
+  language: String!
+  linkedinIntegrationEnabled: Boolean
+  makeStagesDefault: Boolean
+  name: String!
+  officeIds: [Int]!
+  organization: JobOrganizationInput
+  organizationMemberIds: [Int]
+  profile: String
+  questions: [QuestionInput]
+  recruitmentProcess: String
+  remote: String!
+  salaryCurrency: String
+  salaryMax: Int
+  salaryMin: Int
+  salaryPeriod: String
+  seoDescription: String
+  seoTitle: String
+  socialDescription: String
+  socialTitle: String
+  socialTweet: String
+  startDate: String
+  status: String!
+  websiteOrganizationIds: [Int]
+}
+
+input JobOrganizationInput {
+  description: String
+}
+
+input JobReviewCriterionInput {
+  id: Int
+  name: String
+  position: Int
+  toDestroy: Boolean
+  weight: Int
+}
+
+input JobStageInput {
+  id: Int
+  kind: String
+  locked: Boolean
+  name: String
+  position: Int
+  reference: String
+  toDestroy: Boolean
+  visible: Boolean
+}
+
+input LinkedinIntegrationInput {
+  companyId: Int!
+  contactEmail: String
+  contactName: String
+  enabled: Boolean = false
+}
+
+input OrderInput {
+  direction: OrderInputDirection
+  field: FieldName
+}
+
+input OrganizationMemberJobInput {
+  id: Int!
+  isPinned: Boolean!
+}
+
+input QuestionInput {
+  mode: String
+  question: String
+}
+
+input ToggleApecIntegrationInput {
+  id: Int!
+}
+
+input ToggleLinkedinIntegrationInput {
+  id: Int!
+}
+
+input UpdateApecIntegrationInput {
+  id: Int!
+  legalCompanyName: String!
+  nafCode: String!
+  siret: String!
+}
+
+input UpdateJobInput {
+  apecIntegrationEnabled: Boolean
+  applicationFields: [ApplicationFieldInput]
+  applyUrl: String
+  companyDescription: String
+  contractDurationMax: Int
+  contractDurationMin: Int
+  contractType: String
+  departmentId: Int
+  description: String
+  educationLevel: String
+  eventServiceIds: [Int]
+  experienceLevel: String
+  id: Int!
+  jobReviewCriteria: [JobReviewCriterionInput]
+  jobStages: [JobStageInput]
+  language: String
+  linkedinIntegrationEnabled: Boolean
+  makeStagesDefault: Boolean
+  name: String
+  officeIds: [Int]
+  organization: JobOrganizationInput
+  organizationMemberIds: [Int]
+  profile: String
+  questions: [QuestionInput]
+  recruitmentProcess: String
+  remote: String
+  salaryCurrency: String
+  salaryMax: Int
+  salaryMin: Int
+  salaryPeriod: String
+  seoDescription: String
+  seoTitle: String
+  socialDescription: String
+  socialTitle: String
+  socialTweet: String
+  startDate: String
+  status: String
+  websiteOrganizationIds: [Int]
+}
+
+input UpdateLinkedinIntegrationInput {
+  companyId: Int!
+  contactEmail: String
+  contactName: String
+  id: Int!
+}
+
+type ApecIntegration {
+  acl: IntegrationPolicies
+  enabled: Boolean
+  id: Int
+  legalCompanyName: String
+  nafCode: String
+  siret: String
+}
+
+type ApecIntegrationJob {
+  acl: IntegrationJobPolicies
+  apecIntegration: ApecIntegration
+  job: Job
+}
+
+type ApecIntegrationPayload {
+  """A list of failed validations. May be blank or null if mutation succeeded."""
+  messages: [ValidationMessage]
+  """The object created/updated/deleted by the mutation. May be null if mutation failed."""
+  result: ApecIntegration
+  """Indicates if the mutation completed successfully or not."""
+  successful: Boolean!
+}
+
+type ApplicationField {
+  category: String
+  mode: String
+  name: String
+}
+
+type Candidate {
+  answers: Json
+  archived: Boolean
+  coverLetter: String
+  creatorId: Int
+  criteriaAverageNotes: Json
+  job: Job
+  jobStageId: Int
+  lastActivityAt: DateTime
+  lastConsentMailSentAt: DateTime
+  lastMovedAt: DateTime
+  nbComments: Int
+  nbDownVotes: Int
+  nbHeartVotes: Int
+  nbSentEmails: Int
+  nbUpVotes: Int
+  organization: Organization
+  origin: String
+  originDetails: String
+  originReference: String
+  portfolio: String
+  portfolioContentType: String
+  portfolioSize: Int
+  privacyCleanedAt: DateTime
+  privacyConsentUntil: DateTime
+  reference: String
+  referrer: String
+  replied: Boolean
+  repliedIn: Int
+  resume: String
+  resumeContentType: String
+  resumeSize: Int
+  reviewsAverageNotes: Json
+  trackingInfos: Json
+}
+
+type ContractType {
+  reference: String
+}
+
+type Department {
+  acl: DepartmentPolicies
+  colorIndex: Int
+  cover: String
+  description: String
+  icon: String
+  iconHover: String
+  id: Int
+  isActive: Boolean
+  jobsCount: Int
+  name: String
+  oldCover: String
+  oldIcon: String
+  oldIconHover: String
+  organization: Organization
+  reference: String
+  slug: String
+  videoUrl: String
+}
+
+type DepartmentPolicies {
+  create: Boolean
+  destroy: Boolean
+  edit: Boolean
+  index: Boolean
+  new: Boolean
+  show: Boolean
+  update: Boolean
+}
+
+type EducationLevel {
+  reference: String
+}
+
+type EmailTemplatePolicies {
+  create: Boolean
+  destroy: Boolean
+  index: Boolean
+  show: Boolean
+  update: Boolean
+}
+
+type EventService {
+  eventTypes: String
+  id: Int
+  isActive: Boolean
+  name: String
+  service: String
+  token: String
+  webhookUrl: String
+}
+
+type EventServicePolicies {
+  create: Boolean
+  destroy: Boolean
+  index: Boolean
+  show: Boolean
+  update: Boolean
+  zapier: Boolean
+}
+
+type ExperienceLevel {
+  reference: String
+}
+
+type I18n {
+  en: String
+  fr: String
+}
+
+type IntegrationJobPolicies {
+  create: Boolean
+  index: Boolean
+  show: Boolean
+  update: Boolean
+}
+
+type IntegrationPolicies {
+  create: Boolean
+  index: Boolean
+  show: Boolean
+  update: Boolean
+}
+
+type Job {
+  acl: JobPolicies
+  apecIntegrationJob: ApecIntegrationJob
+  applicationFields: [ApplicationField]
+  applyUrl: String
+  archivedAt: DateTime
+  candidates: [Candidate]
+  candidatesCount: Int
+  companyDescription: String
+  contractDurationMax: Int
+  contractDurationMin: Int
+  contractType: String
+  department: Department
+  description: String
+  duplicateFromId: Int
+  educationLevel: String
+  eventServices: [EventService]
+  experienceLevel: String
+  id: Int
+  initialCandidatesCount: Int
+  isDefault: Boolean
+  jobRecruiters: [JobRecruiter]
+  jobReviewCriteria: [JobReviewCriterion]
+  jobStages: [JobStage]
+  language: String
+  lastActivityAt: DateTime
+  linkedinIntegrationJob: LinkedinIntegrationJob
+  name: String
+  office: Office
+  offices: [Office]
+  organization: Organization
+  organizationMemberJob: OrganizationMemberJob
+  otherCandidatesCount: Int
+  profession: Profession @deprecated(reason: "The profession isn't used on our side anymore.")
+  profile: String
+  promoted: Boolean
+  publishedAt: DateTime
+  questions: [JobQuestion]
+  recruitmentProcess: String
+  reference: String
+  refusedCandidatesCount: Int
+  remote: String
+  salaryCurrency: String
+  salaryMax: Int
+  salaryMin: Int
+  salaryPeriod: String
+  seoDescription: String
+  seoTitle: String
+  slug: String
+  socialDescription: String
+  socialTitle: String
+  socialTweet: String
+  startDate: DateTime
+  status: String
+  websiteOrganizationJobs: [WebsiteOrganizationJob]
+  websiteOrganizationSlug: String
+}
+
+type JobPayload {
+  """A list of failed validations. May be blank or null if mutation succeeded."""
+  messages: [ValidationMessage]
+  """The object created/updated/deleted by the mutation. May be null if mutation failed."""
+  result: Job
+  """Indicates if the mutation completed successfully or not."""
+  successful: Boolean!
+}
+
+type JobPolicies {
+  advancedAnalytics: Boolean
+  analytics: Boolean
+  archivingSoon: Boolean
+  create: Boolean
+  destroy: Boolean
+  duplicate: Boolean
+  index: Boolean
+  legacyAnalytics: Boolean
+  preview: Boolean
+  previewWttj: Boolean
+  seo: Boolean
+  show: Boolean
+  statistics: Boolean
+  subscribe: Boolean
+  update: Boolean
+  updateStatus: Boolean
+}
+
+type JobQuestion {
+  mode: String
+  question: String
+}
+
+type JobRecruiter {
+  acl: JobRecruiterPolicies
+  job: Job
+  organizationMember: OrganizationMember
+}
+
+type JobRecruiterPolicies {
+  create: Boolean
+  destroy: Boolean
+  index: Boolean
+  show: Boolean
+  update: Boolean
+}
+
+type JobReviewCriterion {
+  id: Int
+  name: String
+  position: Int
+  weight: Int
+}
+
+type JobServices {
+  wkAnalytics: WkAnalyticsJobService
+}
+
+type JobStage {
+  candidatesCount: Int
+  id: Int
+  job: Job
+  kind: String
+  locked: Boolean
+  name: String
+  organization: Organization
+  position: Int
+  positions: [String]
+  reference: String
+  visible: Boolean
+}
+
+type JobWithServices {
+  job: Job
+  services: JobServices
+}
+
+type JobsWithServices {
+  jobs: [Job]
+  services: JobServices
+}
+
+type Language {
+  reference: String
+}
+
+type LegalDocumentPolicies {
+  create: Boolean
+  destroy: Boolean
+  index: Boolean
+  show: Boolean
+  update: Boolean
+}
+
+type LegalDocumentVersionAcceptationPolicies {
+  create: Boolean
+  destroy: Boolean
+  index: Boolean
+  show: Boolean
+  update: Boolean
+}
+
+type LegalDocumentVersionPolicies {
+  create: Boolean
+  destroy: Boolean
+  index: Boolean
+  show: Boolean
+  update: Boolean
+}
+
+type LinkedinIntegration {
+  acl: IntegrationPolicies
+  companyId: Int
+  contactEmail: String
+  contactName: String
+  enabled: Boolean
+  id: Int
+}
+
+type LinkedinIntegrationJob {
+  acl: IntegrationJobPolicies
+  job: Job
+  linkedinIntegration: LinkedinIntegration
+}
+
+type LinkedinIntegrationPayload {
+  """A list of failed validations. May be blank or null if mutation succeeded."""
+  messages: [ValidationMessage]
+  """The object created/updated/deleted by the mutation. May be null if mutation failed."""
+  result: LinkedinIntegration
+  """Indicates if the mutation completed successfully or not."""
+  successful: Boolean!
+}
+
+type MeetingPolicies {
+  create: Boolean
+  edit: Boolean
+  index: Boolean
+  new: Boolean
+  update: Boolean
+  updateStatus: Boolean
+}
+
+type Office {
+  acl: OfficePolicies
+  address: String
+  city: String
+  countryCode: String
+  district: String
+  geocodingPayload: Json
+  id: Int
+  imageMap: String
+  isHeadquarter: Boolean
+  jobsCount: Int
+  latitude: Float
+  longitude: Float
+  name: String
+  organization: Organization
+  reference: String
+  zipCode: String
+}
+
+type OfficePolicies {
+  create: Boolean
+  destroy: Boolean
+  edit: Boolean
+  index: Boolean
+  new: Boolean
+  show: Boolean
+  update: Boolean
+}
+
+type Organization {
+  accountingReference: String
+  acl: OrganizationPolicies
+  alternativeNames: String
+  apecIntegration: ApecIntegration
+  averageAge: Int
+  billingAddress: String
+  billingCardBrand: String
+  billingCardExpMonth: String
+  billingCardExpYear: String
+  billingCardLast4: String
+  billingCity: String
+  billingComment: String
+  billingCountryCode: String
+  billingEmail: String
+  billingMode: String
+  billingName: String
+  billingStatus: String
+  billingStatusMessage: String
+  billingValidUntil: DateTime
+  billingVatNumber: String
+  billingZipCode: String
+  creationYear: Int
+  defaultFromName: String
+  defaultLanguage: String
+  description: String
+  eventServices: [EventService]
+  hasAcceptedLegalDocuments: Boolean
+  hasExternalAts: Boolean
+  hasOptionalProfession: Boolean
+  hasSectors: Boolean
+  hasWebsite: Boolean
+  id: Int
+  invoicingEntity: String
+  jobPublicationLimit: Int
+  linkedinIntegration: LinkedinIntegration
+  locked: Boolean
+  lockedAt: DateTime
+  logoUrl: String
+  mediaFacebook: String
+  mediaInstagram: String
+  mediaLinkedin: String
+  mediaPinterest: String
+  mediaTwitter: String
+  mediaWebsiteUrl: String
+  mediaYoutube: String
+  name: String
+  nbEmployees: Int
+  officesCount: Int
+  oldLogo: String
+  oldWebsiteLogo: String
+  onboardingLink: String
+  organizationMembersCount: Int
+  organizationReviewCriteria: [OrganizationReviewCriterion]
+  organizationStages: [OrganizationStage]
+  package: String
+  parityMen: Int
+  parityWomen: Int
+  playlistId: String
+  publishedJobsCount: Int
+  reference: String
+  revenue: String
+  slug: String
+  socialMessages: Json
+  socialTitle: String
+  stripeCustomerId: String
+  stripeSubscriptionId: String
+  tags: Json
+  turnover: Int
+  videoPlaylistProvider: String
+  waReference: String
+  websiteLogo: String
+  websiteOrganizations: [WebsiteOrganization]
+}
+
+type OrganizationMember {
+  acl: OrganizationMemberPolicies
+  id: Int
+  jobsCount: Int
+  lastNotificationAt: DateTime
+  nickname: String
+  organization: Organization
+  reference: String
+  role: String
+  user: User
+}
+
+type OrganizationMemberJob {
+  acl: OrganizationMemberJobPolicies
+  id: Int
+  isPinned: Boolean
+  lastSeenAt: DateTime
+}
+
+type OrganizationMemberJobPayload {
+  """A list of failed validations. May be blank or null if mutation succeeded."""
+  messages: [ValidationMessage]
+  """The object created/updated/deleted by the mutation. May be null if mutation failed."""
+  result: OrganizationMemberJob
+  """Indicates if the mutation completed successfully or not."""
+  successful: Boolean!
+}
+
+type OrganizationMemberJobPolicies {
+  show: Boolean
+  update: Boolean
+}
+
+type OrganizationMemberPolicies {
+  create: Boolean
+  destroy: Boolean
+  edit: Boolean
+  index: Boolean
+  menuEdit: Boolean
+  new: Boolean
+  sendBackInvitation: Boolean
+  show: Boolean
+  update: Boolean
+}
+
+type OrganizationPolicies {
+  advancedAnalytics: Boolean
+  analytics: Boolean
+  applicationQuestions: Boolean
+  applyUrl: Boolean
+  billing: Boolean
+  billingAddress: Boolean
+  billingInvoices: Boolean
+  billingPayment: Boolean
+  billingPaymentCancel: Boolean
+  billingPaymentSubscribe: Boolean
+  billingRead: Boolean
+  billingUpdate: Boolean
+  chromeExtension: Boolean
+  create: Boolean
+  embed: Boolean
+  index: Boolean
+  legacyAnalytics: Boolean
+  menuEdit: Boolean
+  multiOffices: Boolean
+  newJobForm: Boolean
+  packages: Boolean
+  pipeline: Boolean
+  publishJobUnlisted: Boolean
+  reviews: Boolean
+  show: Boolean
+  showSettings: Boolean
+  submitJobToValidate: Boolean
+  update: Boolean
+}
+
+type OrganizationReviewCriterion {
+  id: Int
+  name: String
+  organization: Organization
+  position: Int
+  weight: Int
+}
+
+type OrganizationStage {
+  id: Int
+  kind: String
+  locked: Boolean
+  name: String
+  organization: Organization
+  position: Int
+  reference: String
+  visible: Boolean
+}
+
+type OrganizationToolPolicies {
+  create: Boolean
+  destroy: Boolean
+  index: Boolean
+  show: Boolean
+  update: Boolean
+}
+
+type Policies {
+  departments: DepartmentPolicies
+  emailTemplates: EmailTemplatePolicies
+  eventServices: EventServicePolicies
+  integrationJobs: IntegrationJobPolicies
+  integrations: IntegrationPolicies
+  jobRecruiters: JobRecruiterPolicies
+  jobs: JobPolicies
+  legalDocumentVersionAcceptations: LegalDocumentVersionAcceptationPolicies
+  legalDocumentVersions: LegalDocumentVersionPolicies
+  legalDocuments: LegalDocumentPolicies
+  meetings: MeetingPolicies
+  offices: OfficePolicies
+  organizationMemberJobs: OrganizationMemberJobPolicies
+  organizationMembers: OrganizationMemberPolicies
+  organizationTools: OrganizationToolPolicies
+  organizations: OrganizationPolicies
+  toolCategories: ToolCategoryPolicies
+  tools: ToolPolicies
+  users: UserPolicies
+  websiteOrganizations: WebsiteOrganizationPolicies
+  websites: WebsitePolicies
+}
+
+type Profession {
+  acl: ProfessionPolicies
+  i18nNames: I18n
+  id: Int
+  linkedinReferences: String
+  name: String
+  oldReference: String
+  professionCategory: ProfessionCategory
+  reference: String
+}
+
+type ProfessionCategory {
+  acl: ProfessionCategoryPolicies
+  i18nNames: I18n
+  id: Int
+  name: String
+  reference: String
+}
+
+type ProfessionCategoryPolicies {
+  index: Boolean
+  show: Boolean
+}
+
+type ProfessionPolicies {
+  index: Boolean
+  show: Boolean
+}
+
+type Remote {
+  reference: String
+}
+
+type RootMutationType {
+  createApecIntegration(apecIntegration: ApecIntegrationInput): ApecIntegrationPayload
+  createJob(job: CreateJobInput): JobPayload
+  createLinkedinIntegration(linkedinIntegration: LinkedinIntegrationInput): LinkedinIntegrationPayload
+  disableApecIntegration(apecIntegration: ToggleApecIntegrationInput): ApecIntegrationPayload
+  disableLinkedinIntegration(linkedinIntegration: ToggleLinkedinIntegrationInput): LinkedinIntegrationPayload
+  enableApecIntegration(apecIntegration: ToggleApecIntegrationInput): ApecIntegrationPayload
+  enableLinkedinIntegration(linkedinIntegration: ToggleLinkedinIntegrationInput): LinkedinIntegrationPayload
+  pinOrganizationMemberJob(organizationMemberJob: OrganizationMemberJobInput): OrganizationMemberJobPayload
+  updateApecIntegration(apecIntegration: UpdateApecIntegrationInput): ApecIntegrationPayload
+  updateJob(job: UpdateJobInput): JobPayload
+  updateLinkedinIntegration(linkedinIntegration: UpdateLinkedinIntegrationInput): LinkedinIntegrationPayload
+}
+
+type RootQueryType {
+  """Get APEC integration"""
+  apecIntegration: ApecIntegration
+  """Get default job application fields"""
+  applicationFields: [ApplicationField]
+  """Find candidate"""
+  candidate(reference: String): Candidate
+  """Get all candidates"""
+  candidates(orderBy: OrderInput): [Candidate]
+  """Get all contract types"""
+  contractTypes: [ContractType]
+  countJobs(contractTypes: [String], departments: [String], hasDepartment: Boolean, limit: Int, offices: [String], orderBy: OrderInput, query: String, status: String, users: [String]): Int
+  """Get current organization"""
+  currentOrganization: Organization
+  """Get current organization member"""
+  currentOrganizationMember: OrganizationMember
+  """Get current user"""
+  currentUser: User
+  """Find department"""
+  department(reference: String!): Department
+  """Get all departments"""
+  departments(hasJobs: Boolean, limit: Int, offset: Int, orderBy: OrderInput, query: String, references: [String]): [Department]
+  """Get all education levels"""
+  educationLevels: [EducationLevel]
+  """Get all experience levels"""
+  experienceLevels: [ExperienceLevel]
+  """Find job"""
+  job(id: Int, isDefault: Boolean, reference: String): Job
+  """Find if job exists"""
+  jobExists(id: Int, reference: String): Boolean
+  """Find job recruiter"""
+  jobRecruiter(reference: String!): JobRecruiter
+  """Get all job recruiters"""
+  jobRecruiters: [JobRecruiter]
+  """Find job with services"""
+  jobWithServices(id: Int, isDefault: Boolean, reference: String): JobWithServices
+  """Get all jobs"""
+  jobs(contractTypes: [String], departments: [String], hasDepartment: Boolean, limit: Int, offices: [String], offset: Int, orderBy: OrderInput, query: String, status: String, users: [String]): [Job]
+  """Get all jobs with services"""
+  jobsWithServices(contractTypes: [String], departments: [String], hasDepartment: Boolean, limit: Int, offices: [String], offset: Int, orderBy: OrderInput, query: String, status: String, users: [String]): JobsWithServices
+  """Get all languages"""
+  languages: [Language]
+  """Get LinkedIn integration"""
+  linkedinIntegration: LinkedinIntegration
+  """Find office"""
+  office(reference: String!): Office
+  """Get all offices"""
+  offices(limit: Int, offset: Int, orderBy: OrderInput, query: String, references: [String]): [Office]
+  """Find organization"""
+  organization(reference: String!): Organization
+  """Get all organizations"""
+  organizations(limit: Int, offset: Int, orderBy: OrderInput): [Organization]
+  """Get all policies"""
+  policies: Policies
+  """Find profession"""
+  profession(reference: String!): Profession
+  """Get all professions"""
+  professions(limit: Int, offset: Int, orderBy: OrderInput, query: String, references: [String]): [Profession]
+  """Get all remote values"""
+  remotes: [Remote]
+  """Get salary benchmark"""
+  salaryBenchmark(country: String!, jobTitle: String!, level: FiguresLevel): SalaryBenchmark
+  """Get all salary currencies"""
+  salaryCurrencies: [SalaryCurrency]
+  """Get all salary periods"""
+  salaryPeriods: [SalaryPeriod]
+  """Get all users"""
+  users(limit: Int, offset: Int, orderBy: OrderInput, query: String, references: [String]): [User]
+  """Get all website organization jobs"""
+  websiteOrganizationJobs(status: String): [WebsiteOrganizationJob]
+  """get all website organizations"""
+  websiteOrganizations(status: String): [WebsiteOrganization]
+}
+
+type SalaryBenchmark {
+  currencyCode: String
+  level: String
+  profession: String
+  totalCashP25: Int
+  totalCashP50: Int
+  totalCashP75: Int
+}
+
+type SalaryCurrency {
+  reference: String
+}
+
+type SalaryPeriod {
+  reference: String
+}
+
+type ToolCategoryPolicies {
+  create: Boolean
+  destroy: Boolean
+  index: Boolean
+  show: Boolean
+  update: Boolean
+}
+
+type ToolPolicies {
+  create: Boolean
+  destroy: Boolean
+  index: Boolean
+  show: Boolean
+  update: Boolean
+}
+
+type User {
+  acl: UserPolicies
+  algoliaApiKey: String
+  defaultLanguage: String
+  email: String
+  firstname: String
+  id: Int
+  imageUrl: String
+  lastname: String
+  organization: Organization
+  organizationMembers: [OrganizationMember]
+  policies: Policies
+  reference: String
+  subtitle: String
+  waOrganizations: [WaOrganization]
+  waReference: String
+}
+
+type UserPolicies {
+  create: Boolean
+  destroy: Boolean
+  index: Boolean
+  show: Boolean
+  update: Boolean
+}
+
+"""Validation messages are returned when mutation input does not meet the requirements. While client-side validation is highly recommended to provide the best User Experience, All inputs will always be validated server-side. Some examples of validations are: * Username must be at least 10 characters * Email field does not contain an email address * Birth Date is required While GraphQL has support for required values, mutation data fields are always set to optional in our API. This allows 'required field' messages to be returned in the same manner as other validations. The only exceptions are id fields, which may be required to perform updates or deletes."""
+type ValidationMessage {
+  """A unique error code for the type of validation used."""
+  code: String!
+  """The input field that the error applies to. The field can be used to identify which field the error message should be displayed next to in the presentation layer. If there are multiple errors to display for a field, multiple validation messages will be in the result. This field may be null in cases where an error cannot be applied to a specific field."""
+  field: String
+  """A friendly error message, appropriate for display to the end user. The message is interpolated to include the appropriate variables. Example: `Username must be at least 10 characters` This message may change without notice, so we do not recommend you match against the text. Instead, use the *code* field for matching."""
+  message: String
+  """A list of substitutions to be applied to a validation message template"""
+  options: [ValidationOption]
+  """A template used to generate the error message, with placeholders for option substitution. Example: `Username must be at least {count} characters` This message may change without notice, so we do not recommend you match against the text. Instead, use the *code* field for matching."""
+  template: String
+}
+
+type ValidationOption {
+  """The name of a variable to be substituted in a validation message template"""
+  key: String!
+  """The value of a variable to be substituted in a validation message template"""
+  value: String!
+}
+
+type WaOrganization {
+  identifier: String
+  logoUrl: String
+  name: String
+  reference: String
+}
+
+type Website {
+  acl: WebsitePolicies
+  domain: String
+  id: Int
+  internalSubdomain: String
+  name: String
+  reference: String
+  status: String
+}
+
+type WebsiteOrganization {
+  acl: WebsiteOrganizationPolicies
+  id: Int
+  jobPublicationLimitExceeded(jobId: Int, jobReference: String): Boolean
+  organization: Organization
+  role: String
+  status: String
+  temporaryProfileStatus: String
+  website: Website
+  websiteOrganizationJobs: [WebsiteOrganizationJob]
+}
+
+type WebsiteOrganizationJob {
+  job: Job
+  organization: Organization
+  website: Website
+  websiteOrganization: WebsiteOrganization
+}
+
+type WebsiteOrganizationPolicies {
+  analytics: Boolean
+  create: Boolean
+  destroy: Boolean
+  index: Boolean
+  settings: Boolean
+  show: Boolean
+  update: Boolean
+}
+
+type WebsitePolicies {
+  analytics: Boolean
+  index: Boolean
+  settings: Boolean
+  show: Boolean
+  update: Boolean
+}
+
+type WkAnalyticsJobService {
+  expireAt: DateTime
+  token: String
+}
+
+schema {
+  query: RootQueryType
+  mutation: RootMutationType
+}

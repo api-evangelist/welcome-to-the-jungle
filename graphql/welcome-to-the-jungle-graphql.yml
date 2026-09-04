@@ -1,0 +1,128 @@
+generated: '2026-09-04'
+method: probed
+source: https://api.welcomekit.co/api/v1/graphql
+endpoint: https://api.welcomekit.co/api/v1/graphql
+api: Welcome Kit / Welcome ATS GraphQL API
+summary: 'A live, first-party GraphQL API for the Welcome Kit / Welcome ATS platform, discovered by
+  probing api.welcomekit.co on 2026-09-04. ANONYMOUS INTROSPECTION IS ENABLED — the full schema was read
+  without any credential — while every data field is authorization-gated. This is the only complete
+  machine-readable contract Welcome to the Jungle publishes: there is no OpenAPI, Swagger or AsyncAPI
+  document on any of its hosts. It is also undocumented — developers.welcomekit.co describes only the
+  REST /api/v1/external surface and never mentions GraphQL.'
+discovery:
+  probed:
+  - url: https://api.welcomekit.co/api/v1/graphql
+    method: POST
+    status: 200
+    result: schema returned
+  - url: https://api.welcomekit.co/graphql
+    status: 404
+  - url: https://www.welcomekit.co/graphql
+    status: 404
+  - url: https://www.welcometothejungle.com/graphql
+    status: 404
+  introspection_enabled: true
+  introspection_auth_required: false
+  complexity_limit: 150
+  complexity_note: 'The server enforces a query-complexity budget (max 150) and rejected the standard
+    single-shot IntrospectionQuery at complexity 181. The schema was captured by walking __type(name:)
+    one type at a time; all 95 named types were retrieved with no errors.'
+ownership:
+  verified: true
+  note: 'The schema names itself: types include ApecIntegration (APEC, the French executive job board),
+    LinkedinIntegration, WkAnalyticsJobService ("Wk" for Welcome Kit), WaOrganization,
+    WebsiteOrganization, JobStage and OrganizationMember — the Welcome Kit / Welcome ATS domain model.
+    welcomekit.co is Welcome to the Jungle''s own ATS product host: status.welcomekit.co is titled "WTTJ
+    Solutions ATS", developers.welcomekit.co is titled "Welcome to the Jungle Solutions API",
+    github.com/WTTJ/wk-api-docs is "WelcomeKit API documentation" in the company GitHub org, and
+    www.welcomekit.co redirects sign-in to myaccount.welcometothejungle.com.'
+authorization:
+  data_gated: true
+  observed:
+  - query: '{currentUser{id}}'
+    response: '{"data":{"currentUser":null},"errors":[{"message":"unauthorized","path":["currentUser"],"extensions":{"code":"unauthorized"}}]}'
+  - query: '{jobs{id}}'
+    response: '{"data":{"jobs":null},"errors":[{"message":"unauthorized","path":["jobs"],"extensions":{"code":"unauthorized"}}]}'
+  note: 'Every root field returns null with an `unauthorized` error and an extensions.code when called
+    anonymously. Note the GraphQL error envelope carries a machine-readable extensions.code, which the
+    documented REST surface does not — the two surfaces have different error contracts.'
+schema:
+  sdl: graphql/welcome-to-the-jungle.graphql
+  introspection: graphql/welcome-to-the-jungle-introspection.json
+  type_count: 95
+  query_root: RootQueryType
+  mutation_root: RootMutationType
+  subscription_root: null
+  query_count: 36
+  mutation_count: 11
+  queries:
+  - apecIntegration
+  - applicationFields
+  - candidate
+  - candidates
+  - contractTypes
+  - countJobs
+  - currentOrganization
+  - currentOrganizationMember
+  - currentUser
+  - department
+  - departments
+  - educationLevels
+  - experienceLevels
+  - job
+  - jobExists
+  - jobRecruiter
+  - jobRecruiters
+  - jobWithServices
+  - jobs
+  - jobsWithServices
+  - languages
+  - linkedinIntegration
+  - office
+  - offices
+  - organization
+  - organizations
+  - policies
+  - profession
+  - professions
+  - remotes
+  - salaryBenchmark
+  - salaryCurrencies
+  - salaryPeriods
+  - users
+  - websiteOrganizationJobs
+  - websiteOrganizations
+  mutations:
+  - createApecIntegration
+  - createJob
+  - createLinkedinIntegration
+  - disableApecIntegration
+  - disableLinkedinIntegration
+  - enableApecIntegration
+  - enableLinkedinIntegration
+  - pinOrganizationMemberJob
+  - updateApecIntegration
+  - updateJob
+  - updateLinkedinIntegration
+  deprecations:
+  - path: Job.profession
+    reason: The profession isn't used on our side anymore.
+    note: Matches the REST surface, where profession_reference and GET /external/professions carry the same deprecation prose.
+capabilities_absent_from_rest:
+- countJobs and jobExists — cheap existence and count checks with no REST equivalent.
+- salaryBenchmark — salary benchmarking, with a FiguresLevel enum (JUNIOR / INTERMEDIATE / SENIOR / STAFF / TEAM_LEAD / HEAD_OF / VP / C_LEVEL); nothing comparable is documented in REST.
+- 'apecIntegration and linkedinIntegration, plus eight mutations that create, update, enable and disable them — first-class job-distribution integrations (APEC, LinkedIn) that the REST API does not expose at all.'
+- policies and the ~20 *Policies types — a per-object permission model an agent can read before attempting a write. There is no REST analogue.
+- applicationFields, jobRecruiters, jobStages, jobReviewCriteria, websiteOrganizations, organizationStages — ATS configuration surfaces absent from REST.
+capabilities_absent_from_graphql:
+- Candidate emails, candidate documents and candidate comments — the REST candidates surface writes all three; GraphQL exposes candidate/candidates as reads only.
+- Analytics moves (GET /external/moves).
+- WTTJ media articles (GET /external/cms/articles/all).
+- Employer-branding images, videos, tools, sectors and the careers-site embed payload.
+- Department and office creation/update — GraphQL reads them; only REST writes them.
+caveats:
+- 'Undocumented and unversioned in public. The developer portal never mentions this endpoint, so there is
+  no published stability, deprecation or support commitment for it. Treat it as an internal API that is
+  reachable, not as a supported integration surface.'
+- 'The schema was captured verbatim from the server''s own introspection response. No field, type or
+  description here was authored by API Evangelist.'

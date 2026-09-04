@@ -1,0 +1,43 @@
+generated: '2026-09-04'
+method: searched
+source: https://solutions.welcometothejungle.com/en/pricing
+docs: https://solutions.welcometothejungle.com/en/pricing
+plan_count: 0
+summary: 'Welcome to the Jungle publishes a pricing page but no priced tiers. The page describes a
+  three-component commercial model — a Welcome Hiring Suite subscription, an active-jobs package with
+  top-ups, and optional employer-brand content production — and states that pricing depends on hiring
+  volume and is quoted after a conversation. No amount, currency, billing period or included quota is
+  published for any component, so plan_count is 0: this is a sales-gated price, not a hidden one.'
+currency: null
+billing_periods: []
+components:
+- name: Welcome Hiring Suite subscription
+  price: null
+  price_disclosure: contact-sales
+  includes:
+  - Welcome Employer Brand
+  - Welcome Job Matching
+  - Welcome Sourcing
+  - Welcome ATS
+  quota: null
+  overage: null
+- name: Active jobs package
+  price: null
+  price_disclosure: contact-sales
+  quota: 'Customer-chosen number of concurrently active job postings.'
+  overage: 'Top-ups can be added at any time if hiring increases; the top-up price is not published.'
+- name: Employer brand content
+  price: null
+  price_disclosure: contact-sales
+  quota: null
+  note: Optional photo and video packages produced by the Welcome to the Jungle studio team.
+api_pricing:
+  published: false
+  metered: false
+  note: 'The Solutions API is not priced or packaged separately on any public page. Access is granted by
+    request through the help form, and the partnership-gated endpoints (GET /jobs/all,
+    GET /organizations, GET /cms/articles/all) sit behind a commercial partnership whose terms are not
+    published. There is no published free tier, trial or usage-based API price.'
+quote_url: https://solutions.welcometothejungle.com/en/quote
+demo_url: https://solutions.welcometothejungle.com/en/contact
+checked: '2026-09-04'

@@ -1,0 +1,380 @@
+generated: '2026-09-04'
+method: derived
+source: graphql/welcome-to-the-jungle-introspection.json (anonymous GraphQL introspection of https://api.welcomekit.co/api/v1/graphql, 2026-09-04)
+api: Welcome Kit / Welcome ATS GraphQL API
+summary: 'Entity-relationship graph of the Welcome Kit / Welcome ATS domain, computed mechanically from
+  the GraphQL type graph: every OBJECT type is an entity, and every field whose base type is another
+  OBJECT is an edge (has_many when the field is a list, has_one otherwise). Nothing here was authored by
+  hand — the entity names, field names and edges are the server''s own. The ~20 *Policies types are
+  excluded from the entity list because they are a permission overlay rather than domain objects, but
+  they are the reason a caller can ask what it is allowed to do before it writes.'
+derivation:
+  rule_entities: GraphQL OBJECT types, excluding the query/mutation roots, *Payload wrappers and *Policies overlays.
+  rule_edges: A field is an edge when its unwrapped type is one of those entities; kind is has_many for a LIST, has_one otherwise.
+  id_prefixes_observed: 'The REST documentation shows opaque reference strings — jobs as WTTJ_<token> (e.g. WTTJ_ZyDmzZ6) and candidates as wttj-<hex> — but the GraphQL schema exposes ids as typed fields without a documented prefix scheme, so no prefix registry is asserted here.'
+  caveat: 'Cardinality is read from the schema''s list-ness, which is the server''s declaration, not from
+    observed data — no data could be read, since every root field is authorization-gated.'
+entity_count: 41
+relationship_count: 57
+central_entities:
+- Job
+- Candidate
+- Organization
+- OrganizationMember
+- Department
+- Office
+- JobStage
+render: null
+entities:
+- name: ApecIntegration
+  field_count: 6
+  scalar_fields: ["enabled", "id", "legalCompanyName", "nafCode", "siret"]
+- name: ApecIntegrationJob
+  field_count: 3
+  scalar_fields: []
+- name: ApplicationField
+  field_count: 3
+  scalar_fields: ["category", "mode", "name"]
+- name: Candidate
+  field_count: 33
+  scalar_fields: ["answers", "archived", "coverLetter", "creatorId", "criteriaAverageNotes", "jobStageId", "lastActivityAt", "lastConsentMailSentAt", "lastMovedAt", "nbComments", "nbDownVotes", "nbHeartVotes", "nbSentEmails", "nbUpVotes", "origin", "originDetails", "originReference", "portfolio", "portfolioContentType", "portfolioSize", "privacyCleanedAt", "privacyConsentUntil", "reference", "referrer"]
+- name: ContractType
+  field_count: 1
+  scalar_fields: ["reference"]
+- name: Department
+  field_count: 17
+  scalar_fields: ["colorIndex", "cover", "description", "icon", "iconHover", "id", "isActive", "jobsCount", "name", "oldCover", "oldIcon", "oldIconHover", "reference", "slug", "videoUrl"]
+- name: EducationLevel
+  field_count: 1
+  scalar_fields: ["reference"]
+- name: EventService
+  field_count: 7
+  scalar_fields: ["eventTypes", "id", "isActive", "name", "service", "token", "webhookUrl"]
+- name: ExperienceLevel
+  field_count: 1
+  scalar_fields: ["reference"]
+- name: I18n
+  field_count: 2
+  scalar_fields: ["en", "fr"]
+- name: Job
+  field_count: 55
+  scalar_fields: ["applyUrl", "archivedAt", "candidatesCount", "companyDescription", "contractDurationMax", "contractDurationMin", "contractType", "description", "duplicateFromId", "educationLevel", "experienceLevel", "id", "initialCandidatesCount", "isDefault", "language", "lastActivityAt", "name", "otherCandidatesCount", "profile", "promoted", "publishedAt", "recruitmentProcess", "reference", "refusedCandidatesCount"]
+- name: JobQuestion
+  field_count: 2
+  scalar_fields: ["mode", "question"]
+- name: JobRecruiter
+  field_count: 3
+  scalar_fields: []
+- name: JobReviewCriterion
+  field_count: 4
+  scalar_fields: ["id", "name", "position", "weight"]
+- name: JobServices
+  field_count: 1
+  scalar_fields: []
+- name: JobStage
+  field_count: 11
+  scalar_fields: ["candidatesCount", "id", "kind", "locked", "name", "position", "positions", "reference", "visible"]
+- name: JobWithServices
+  field_count: 2
+  scalar_fields: []
+- name: JobsWithServices
+  field_count: 2
+  scalar_fields: []
+- name: Language
+  field_count: 1
+  scalar_fields: ["reference"]
+- name: LinkedinIntegration
+  field_count: 6
+  scalar_fields: ["companyId", "contactEmail", "contactName", "enabled", "id"]
+- name: LinkedinIntegrationJob
+  field_count: 3
+  scalar_fields: []
+- name: Office
+  field_count: 16
+  scalar_fields: ["address", "city", "countryCode", "district", "geocodingPayload", "id", "imageMap", "isHeadquarter", "jobsCount", "latitude", "longitude", "name", "reference", "zipCode"]
+- name: Organization
+  field_count: 72
+  scalar_fields: ["accountingReference", "alternativeNames", "averageAge", "billingAddress", "billingCardBrand", "billingCardExpMonth", "billingCardExpYear", "billingCardLast4", "billingCity", "billingComment", "billingCountryCode", "billingEmail", "billingMode", "billingName", "billingStatus", "billingStatusMessage", "billingValidUntil", "billingVatNumber", "billingZipCode", "creationYear", "defaultFromName", "defaultLanguage", "description", "hasAcceptedLegalDocuments"]
+- name: OrganizationMember
+  field_count: 9
+  scalar_fields: ["id", "jobsCount", "lastNotificationAt", "nickname", "reference", "role"]
+- name: OrganizationMemberJob
+  field_count: 4
+  scalar_fields: ["id", "isPinned", "lastSeenAt"]
+- name: OrganizationReviewCriterion
+  field_count: 5
+  scalar_fields: ["id", "name", "position", "weight"]
+- name: OrganizationStage
+  field_count: 8
+  scalar_fields: ["id", "kind", "locked", "name", "position", "reference", "visible"]
+- name: Profession
+  field_count: 8
+  scalar_fields: ["id", "linkedinReferences", "name", "oldReference", "reference"]
+- name: ProfessionCategory
+  field_count: 5
+  scalar_fields: ["id", "name", "reference"]
+- name: Remote
+  field_count: 1
+  scalar_fields: ["reference"]
+- name: SalaryBenchmark
+  field_count: 6
+  scalar_fields: ["currencyCode", "level", "profession", "totalCashP25", "totalCashP50", "totalCashP75"]
+- name: SalaryCurrency
+  field_count: 1
+  scalar_fields: ["reference"]
+- name: SalaryPeriod
+  field_count: 1
+  scalar_fields: ["reference"]
+- name: User
+  field_count: 15
+  scalar_fields: ["algoliaApiKey", "defaultLanguage", "email", "firstname", "id", "imageUrl", "lastname", "reference", "subtitle", "waReference"]
+- name: ValidationMessage
+  field_count: 5
+  scalar_fields: ["code", "field", "message", "template"]
+- name: ValidationOption
+  field_count: 2
+  scalar_fields: ["key", "value"]
+- name: WaOrganization
+  field_count: 4
+  scalar_fields: ["identifier", "logoUrl", "name", "reference"]
+- name: Website
+  field_count: 7
+  scalar_fields: ["domain", "id", "internalSubdomain", "name", "reference", "status"]
+- name: WebsiteOrganization
+  field_count: 9
+  scalar_fields: ["id", "jobPublicationLimitExceeded", "role", "status", "temporaryProfileStatus"]
+- name: WebsiteOrganizationJob
+  field_count: 4
+  scalar_fields: []
+- name: WkAnalyticsJobService
+  field_count: 2
+  scalar_fields: ["expireAt", "token"]
+relationships:
+- from: ApecIntegrationJob
+  kind: has_one
+  to: ApecIntegration
+  via: apecIntegration
+- from: ApecIntegrationJob
+  kind: has_one
+  to: Job
+  via: job
+- from: Candidate
+  kind: has_one
+  to: Job
+  via: job
+- from: Candidate
+  kind: has_one
+  to: Organization
+  via: organization
+- from: Department
+  kind: has_one
+  to: Organization
+  via: organization
+- from: Job
+  kind: has_one
+  to: ApecIntegrationJob
+  via: apecIntegrationJob
+- from: Job
+  kind: has_many
+  to: ApplicationField
+  via: applicationFields
+- from: Job
+  kind: has_many
+  to: Candidate
+  via: candidates
+- from: Job
+  kind: has_one
+  to: Department
+  via: department
+- from: Job
+  kind: has_many
+  to: EventService
+  via: eventServices
+- from: Job
+  kind: has_many
+  to: JobRecruiter
+  via: jobRecruiters
+- from: Job
+  kind: has_many
+  to: JobReviewCriterion
+  via: jobReviewCriteria
+- from: Job
+  kind: has_many
+  to: JobStage
+  via: jobStages
+- from: Job
+  kind: has_one
+  to: LinkedinIntegrationJob
+  via: linkedinIntegrationJob
+- from: Job
+  kind: has_one
+  to: Office
+  via: office
+- from: Job
+  kind: has_many
+  to: Office
+  via: offices
+- from: Job
+  kind: has_one
+  to: Organization
+  via: organization
+- from: Job
+  kind: has_one
+  to: OrganizationMemberJob
+  via: organizationMemberJob
+- from: Job
+  kind: has_one
+  to: Profession
+  via: profession
+- from: Job
+  kind: has_many
+  to: JobQuestion
+  via: questions
+- from: Job
+  kind: has_many
+  to: WebsiteOrganizationJob
+  via: websiteOrganizationJobs
+- from: JobRecruiter
+  kind: has_one
+  to: Job
+  via: job
+- from: JobRecruiter
+  kind: has_one
+  to: OrganizationMember
+  via: organizationMember
+- from: JobServices
+  kind: has_one
+  to: WkAnalyticsJobService
+  via: wkAnalytics
+- from: JobStage
+  kind: has_one
+  to: Job
+  via: job
+- from: JobStage
+  kind: has_one
+  to: Organization
+  via: organization
+- from: JobWithServices
+  kind: has_one
+  to: Job
+  via: job
+- from: JobWithServices
+  kind: has_one
+  to: JobServices
+  via: services
+- from: JobsWithServices
+  kind: has_many
+  to: Job
+  via: jobs
+- from: JobsWithServices
+  kind: has_one
+  to: JobServices
+  via: services
+- from: LinkedinIntegrationJob
+  kind: has_one
+  to: Job
+  via: job
+- from: LinkedinIntegrationJob
+  kind: has_one
+  to: LinkedinIntegration
+  via: linkedinIntegration
+- from: Office
+  kind: has_one
+  to: Organization
+  via: organization
+- from: Organization
+  kind: has_one
+  to: ApecIntegration
+  via: apecIntegration
+- from: Organization
+  kind: has_many
+  to: EventService
+  via: eventServices
+- from: Organization
+  kind: has_one
+  to: LinkedinIntegration
+  via: linkedinIntegration
+- from: Organization
+  kind: has_many
+  to: OrganizationReviewCriterion
+  via: organizationReviewCriteria
+- from: Organization
+  kind: has_many
+  to: OrganizationStage
+  via: organizationStages
+- from: Organization
+  kind: has_many
+  to: WebsiteOrganization
+  via: websiteOrganizations
+- from: OrganizationMember
+  kind: has_one
+  to: Organization
+  via: organization
+- from: OrganizationMember
+  kind: has_one
+  to: User
+  via: user
+- from: OrganizationReviewCriterion
+  kind: has_one
+  to: Organization
+  via: organization
+- from: OrganizationStage
+  kind: has_one
+  to: Organization
+  via: organization
+- from: Profession
+  kind: has_one
+  to: I18n
+  via: i18nNames
+- from: Profession
+  kind: has_one
+  to: ProfessionCategory
+  via: professionCategory
+- from: ProfessionCategory
+  kind: has_one
+  to: I18n
+  via: i18nNames
+- from: User
+  kind: has_one
+  to: Organization
+  via: organization
+- from: User
+  kind: has_many
+  to: OrganizationMember
+  via: organizationMembers
+- from: User
+  kind: has_many
+  to: WaOrganization
+  via: waOrganizations
+- from: ValidationMessage
+  kind: has_many
+  to: ValidationOption
+  via: options
+- from: WebsiteOrganization
+  kind: has_one
+  to: Organization
+  via: organization
+- from: WebsiteOrganization
+  kind: has_one
+  to: Website
+  via: website
+- from: WebsiteOrganization
+  kind: has_many
+  to: WebsiteOrganizationJob
+  via: websiteOrganizationJobs
+- from: WebsiteOrganizationJob
+  kind: has_one
+  to: Job
+  via: job
+- from: WebsiteOrganizationJob
+  kind: has_one
+  to: Organization
+  via: organization
+- from: WebsiteOrganizationJob
+  kind: has_one
+  to: Website
+  via: website
+- from: WebsiteOrganizationJob
+  kind: has_one
+  to: WebsiteOrganization
+  via: websiteOrganization

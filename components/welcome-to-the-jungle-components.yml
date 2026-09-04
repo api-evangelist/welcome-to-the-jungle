@@ -1,0 +1,39 @@
+generated: '2026-09-04'
+method: searched
+source: https://developers.welcomekit.co/employer-branding-api/get-information-to-build-an-embed , https://github.com/WTTJ/welcome-ui , https://www.npmjs.com/package/welcome-ui
+api: Welcome to the Jungle Solutions API
+summary: 'Welcome to the Jungle publishes two distinct client-side surfaces: a documented careers-site
+  embed data endpoint that customers use to render a jobs widget on their own website, and welcome-ui,
+  the company''s open-source React design system. Neither is a drop-in hosted iframe or a prebuilt
+  script tag — the embed endpoint returns data and leaves the rendering to the integrator.'
+families:
+- name: Careers-site embed
+  kind: data-endpoint-for-embedding
+  hosted: false
+  endpoint: https://www.welcomekit.co/api/v1/embed
+  docs: https://developers.welcomekit.co/employer-branding-api/get-information-to-build-an-embed
+  auth: 'Authorization: Bearer <OAuth access token>'
+  description: 'Returns the jobs and organization information needed to build a widget on a careers
+    website. The provider ships the data contract, not the UI — there is no published <script> loader,
+    iframe URL or web component, so the customer writes the rendering.'
+  note: 'This endpoint sits at /api/v1/embed, outside the /api/v1/external prefix that every other
+    documented operation uses.'
+- name: welcome-ui
+  kind: design-system
+  hosted: false
+  repo: https://github.com/WTTJ/welcome-ui
+  package: https://www.npmjs.com/package/welcome-ui
+  version: 10.6.6
+  published: '2026-09-02'
+  license: MIT
+  stack: React, TypeScript, TailwindCSS, Ariakit
+  description: 'The company''s open-source design system, actively maintained (672 GitHub stars, released
+    two days before this pass). It is the component library Welcome to the Jungle builds its own web apps
+    with, published for public reuse. It is NOT an API-bound embed and does not talk to the Solutions API.'
+  loader: null
+  cdn: null
+absent:
+- hosted embedded dashboards
+- prebuilt drop-in job-board widget (script tag or iframe)
+- web components
+checked: '2026-09-04'

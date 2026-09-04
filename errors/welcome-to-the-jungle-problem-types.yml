@@ -1,0 +1,93 @@
+generated: '2026-09-04'
+method: searched
+source: https://developers.welcomekit.co/errors-and-status
+docs: https://developers.welcomekit.co/errors-and-status
+api: Welcome to the Jungle Solutions API
+format: vendor-json
+rfc9457: false
+summary: 'Welcome to the Jungle Solutions publishes a small, explicit error reference: seven HTTP status
+  codes and four machine-readable error codes carried in a two-field JSON envelope. The envelope is a
+  vendor shape, not RFC 9457 application/problem+json — there is no type URI, no instance, no per-error
+  documentation link and no field-level validation detail, so an agent can classify a failure but cannot
+  self-remediate a validation_failed without reading prose. Transcribed from the published tables plus
+  one live unauthenticated observation.'
+envelope:
+  media_type: application/json
+  fields:
+  - name: error
+    type: string
+    description: Machine-readable error code from the registry below.
+  - name: error_description
+    type: string
+    description: Human-readable explanation. Free text; not enumerated and not stable enough to match on.
+  example: |-
+    {
+      "error": "unauthorized",
+      "error_description": "You are not member of this organization"
+    }
+  observed_live:
+    request: GET https://www.welcomekit.co/api/v1/external/jobs (unauthenticated, no parameters)
+    status: 400
+    body: '{"error":"validation_failed","error_description":"organization_reference is missing"}'
+    observed: '2026-09-04'
+    note: 'The API validates required parameters BEFORE authenticating — an anonymous caller gets 400
+      validation_failed rather than 401 unauthorized. Worth knowing for an agent probing reachability:
+      a 400 here does not mean the credential was accepted.'
+problem_types:
+- code: not_found
+  http_status: 404
+  title: Resource not found
+  description: The requested resource could not be found.
+  remediation: Verify the reference/id in the path and that the token's organization actually owns it.
+  retryable: false
+- code: validation_failed
+  http_status: 400
+  title: Some parameters are invalid
+  description: One or more request parameters are missing or invalid. The offending parameter is named in error_description only.
+  remediation: 'Read error_description for the parameter name; there is no structured field-error array.
+    Required query parameters such as organization_reference, job_reference and candidate_reference are
+    the most common cause.'
+  retryable: false
+- code: unauthorized
+  http_status: 401
+  title: OAuth access_token is invalid
+  description: The bearer access token is missing, malformed or revoked.
+  remediation: Re-check the Authorization header. Tokens are issued out of band via the help form; there is no refresh flow documented.
+  retryable: false
+- code: invalid_scope
+  http_status: 403
+  title: OAuth access_token scope is not authorized
+  description: The token is valid but was not granted a scope covering this resource.
+  remediation: 'Compare the endpoint''s required scope in scopes/welcome-to-the-jungle-scopes.yml and
+    request the missing scope from Welcome to the Jungle. su_* and cms_* scopes need a partnership.'
+  retryable: false
+status_codes:
+- status: 400
+  meaning: Bad Request — your request is invalid.
+- status: 401
+  meaning: Unauthorized — your OAuth access_token is wrong.
+- status: 403
+  meaning: Forbidden — you are not allowed to access this resource.
+- status: 404
+  meaning: Not Found — resource could not be found.
+- status: 405
+  meaning: Method Not Allowed — you tried to use an endpoint with an invalid method.
+- status: 500
+  meaning: Internal Server Error — a problem on the Welcome to the Jungle side. Try again later.
+- status: 503
+  meaning: Service Unavailable — temporarily offline for maintenance. Try again later.
+graphql_envelope:
+  endpoint: https://api.welcomekit.co/api/v1/graphql
+  documented: false
+  shape: 'GraphQL errors[] with message, path and extensions.code'
+  example: '{"data":{"jobs":null},"errors":[{"message":"unauthorized","path":["jobs"],"extensions":{"code":"unauthorized"}}]}'
+  observed: '2026-09-04'
+  note: 'The undocumented GraphQL surface returns a RICHER error contract than the documented REST one —
+    it carries a machine-readable extensions.code and a path locating the failing field, where REST gives
+    only {error, error_description}. Two surfaces of one product with two different error contracts, and
+    only the weaker one is documented.'
+gaps:
+- No 429 / rate-limit status is documented, and no rate-limit response headers were observed.
+- No RFC 9457 type URIs; error codes are bare strings with no resolvable documentation anchor.
+- The GraphQL and REST surfaces do not share an error contract, and the crosswalk between them is undocumented.
+- No structured validation detail — a client cannot map validation_failed to a specific field programmatically.

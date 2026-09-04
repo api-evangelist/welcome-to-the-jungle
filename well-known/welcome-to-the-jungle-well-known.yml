@@ -1,0 +1,198 @@
+generated: '2026-09-04'
+method: probed
+source: 'Direct HTTP probes of the RFC 8615 well-known path list against every host this record knows:
+  the registrable domain and www, the API baseURL host, the docs host, the marketing/solutions host
+  and the legacy API host.'
+note: 'No well-known document is served on any Welcome to the Jungle host. www.welcometothejungle.com
+  and welcometothejungle.com answer HTTP 200 with the same ~32KB single-page-app HTML shell for EVERY
+  /.well-known/* path, which is a catch-all route and not a document — recorded as a miss, not a hit.
+  welcomekit.co, developers.welcomekit.co, api.welcomekit.co and solutions.welcometothejungle.com all
+  return honest 404s. No WellKnown or SecurityTxt pointer is emitted because nothing real was served.'
+hosts:
+- host: www.welcometothejungle.com
+  note: SPA catch-all — every path returns 200 with the site HTML shell; treated as absent.
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: null
+    served: false
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: null
+    served: false
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: null
+    served: false
+  - path: /.well-known/api-catalog
+    status: 200
+    file: null
+    served: false
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    file: null
+    served: false
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: null
+    served: false
+  - path: /.well-known/agent.json
+    status: 200
+    file: null
+    served: false
+- host: welcometothejungle.com
+  note: Same SPA catch-all as the www host.
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: null
+    served: false
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: null
+    served: false
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: null
+    served: false
+  - path: /.well-known/api-catalog
+    status: 200
+    file: null
+    served: false
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    file: null
+    served: false
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: null
+    served: false
+  - path: /.well-known/agent.json
+    status: 200
+    file: null
+    served: false
+- host: www.welcomekit.co
+  note: API baseURL host. Honest 404 HTML on every well-known path.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+    served: false
+- host: developers.welcomekit.co
+  note: Docs host (GitBook-hosted). Honest 404 on every well-known path.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+    served: false
+- host: api.welcomekit.co
+  note: 'Legacy/short API host. Returns a real JSON API 404 envelope — {"errors":{"detail":"Not Found"}}
+    — on every path including /openapi.json, so it is a live API host that publishes no discovery documents.'
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+    served: false
+- host: solutions.welcometothejungle.com
+  note: Marketing/product host (HubSpot CMS). Honest 404 on every well-known path.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+    served: false
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+    served: false

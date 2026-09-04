@@ -1,0 +1,141 @@
+generated: '2026-09-04'
+method: searched
+source: https://developers.welcomekit.co/scopes
+docs: https://developers.welcomekit.co/scopes
+api: Welcome to the Jungle Solutions API
+summary: 'Welcome to the Jungle Solutions publishes a complete OAuth scope reference — 20 standard
+  scopes plus 10 partnership-gated su_* / cms_* scopes. Scopes follow a resource_access naming
+  convention where the suffix is _r (read), _w (write) or _rw (read and write). Scopes are not
+  self-selected: you tell the vendor your use case through the help form and they open the matching
+  set. Transcribed verbatim from the published table; no scope here was inferred.'
+convention:
+  pattern: <resource>_<access>
+  access_suffixes:
+    _r: read
+    _w: write
+    _rw: read and write
+  privileged_prefix: 'su_ — company-wide (super-user) read access across organizations, granted only under a dedicated partnership'
+scope_count: 29
+scopes:
+- name: me_r
+  access: read
+  partnership_required: false
+  description: Read access on your personal information.
+- name: organizations_rw
+  access: read-write
+  partnership_required: false
+  description: Read and write access on your organization(s).
+- name: organizations_r
+  access: read
+  partnership_required: false
+  description: Read access on your organization(s).
+- name: jobs_rw
+  access: read-write
+  partnership_required: false
+  description: Read and write access on your job offers.
+- name: jobs_r
+  access: read
+  partnership_required: false
+  description: Read access on your job offers.
+- name: offices_rw
+  access: read-write
+  partnership_required: false
+  description: Read and write access on your offices.
+- name: offices_r
+  access: read
+  partnership_required: false
+  description: Read access on your offices.
+- name: departments_rw
+  access: read-write
+  partnership_required: false
+  description: Read and write access on your departments.
+- name: departments_r
+  access: read
+  partnership_required: false
+  description: Read access on your departments.
+- name: candidates_rw
+  access: read-write
+  partnership_required: false
+  description: Read and write access on all candidates (limited to the user's role).
+- name: candidates_r
+  access: read
+  partnership_required: false
+  description: Read access on all candidates (limited to the user's role).
+- name: my_candidates_rw
+  access: read-write
+  partnership_required: false
+  description: 'Read and write access limited to candidates this user created through the API — the
+    least-privilege scope for synchronising an external service without exposing the whole candidate base.'
+- name: documents_rw
+  access: read-write
+  partnership_required: false
+  description: Read and write access on your candidate files.
+- name: documents_r
+  access: read
+  partnership_required: false
+  description: Read access on your candidate files.
+- name: emails_rw
+  access: read-write
+  partnership_required: false
+  description: Read and write access on your candidate emails.
+- name: emails_r
+  access: read
+  partnership_required: false
+  description: Read access on your candidate emails.
+- name: comments_w
+  access: write
+  partnership_required: false
+  description: Write access on your candidate comments.
+- name: images_r
+  access: read
+  partnership_required: false
+  description: Read access to your images.
+- name: moves_r
+  access: read
+  partnership_required: false
+  description: Read access on candidate moves (pipeline stage transitions).
+- name: videos_r
+  access: read
+  partnership_required: false
+  description: Read access on your video files.
+- name: su_offices_r
+  access: read
+  partnership_required: true
+  description: Read access on offices of a company.
+- name: su_jobs_r
+  access: read
+  partnership_required: true
+  description: Read access on jobs of a company. Required by GET /jobs/all.
+- name: su_departments_r
+  access: read
+  partnership_required: true
+  description: Read access on departments of a company.
+- name: su_organizations_r
+  access: read
+  partnership_required: true
+  description: Read access on organization information of a company. Required by GET /organizations.
+- name: su_images_r
+  access: read
+  partnership_required: true
+  description: Read access to images of a company.
+- name: su_videos_r
+  access: read
+  partnership_required: true
+  description: Read access to videos of a company.
+- name: cms_articles_r
+  access: read
+  partnership_required: true
+  description: Read access to WTTJ articles. Required by GET /cms/articles/all.
+- name: cms_collections_r
+  access: read
+  partnership_required: true
+  description: Read access to WTTJ collections.
+- name: cms_collection_categories_r
+  access: read
+  partnership_required: true
+  description: Read access to WTTJ collection categories.
+notes:
+- 'The published table lists su_offices_r twice; it is recorded once here. That is the only discrepancy
+  between the source table and this transcription.'
+- 'The docs cite the OAuth 2.0 scope definition (draft-ietf-oauth-v2-31 §3.3) but publish no
+  authorization endpoint, token endpoint or discovery document — scopes are granted administratively.'

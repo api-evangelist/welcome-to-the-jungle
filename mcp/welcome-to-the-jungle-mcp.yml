@@ -1,0 +1,253 @@
+generated: '2026-09-04'
+method: derived
+status: candidate
+source: 'Derived from the operation list published at https://developers.welcomekit.co/ (captured verbatim in llms/welcome-to-the-jungle-llms.txt). No OpenAPI document exists, so inputSchema is not asserted for any tool.'
+api: Welcome to the Jungle Solutions API
+summary: 'Welcome to the Jungle ships NO MCP server. A search of the provider''s documentation, GitHub
+  organization (github.com/WTTJ, 38 public repositories) and product pages found no hosted MCP endpoint
+  and no stdio MCP package. The only MCP servers that exist for Welcome to the Jungle are third-party
+  Apify scrapers of the public job board, operated by unrelated parties — they are not the provider''s
+  surface and are deliberately not recorded as one. The tool list below is a CANDIDATE derived from the
+  documented REST operations to show what a first-party server could expose; nothing here is live.'
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: searched
+  note: 'Searched 2026-09-04. Probed mcp.welcometothejungle.com (does not resolve) and reviewed the WTTJ
+    GitHub org and the full documentation set; no MCP endpoint, manifest or package is published. Because
+    mode is none, apis.yml carries type X-MCPServerCandidate rather than MCPServer — this repo must not
+    read as the provider shipping an agent surface it has not shipped.'
+third_party_servers_excluded:
+- vendor: Apify (multiple independent actors)
+  kind: web scraper of the public welcometothejungle.com job board
+  reason: Not operated, endorsed or published by Welcome to the Jungle. Recording it would credit the provider with someone else's server.
+auth_model_for_candidate:
+  scheme: 'Authorization: Bearer <OAuth access token>'
+  self_service: false
+  note: Any real server would inherit the out-of-band token grant and the scope model in scopes/welcome-to-the-jungle-scopes.yml.
+tools:
+- name: list_jobs
+  rest: GET /external/jobs
+  scope: jobs_r
+  category: jobs
+  description: List an organization's job offers. Requires organization_reference; supports status, page, per_page and created_after/updated_after/published_after filters.
+  mutating: false
+- name: list_all_jobs
+  rest: GET /external/jobs/all
+  scope: su_jobs_r
+  category: jobs
+  description: List jobs across all organizations. Partnership-gated.
+  mutating: false
+- name: get_job
+  rest: GET /external/jobs/{reference}
+  scope: jobs_r
+  category: jobs
+  description: Retrieve a single job offer by reference.
+  mutating: false
+- name: create_job
+  rest: POST /external/jobs
+  scope: jobs_rw
+  category: jobs
+  description: Create a job offer. No reversal — there is no DELETE for jobs.
+  mutating: true
+- name: update_job
+  rest: PUT /external/jobs/{reference}
+  scope: jobs_rw
+  category: jobs
+  description: Update a job offer. Overwrite-in-place with no version history.
+  mutating: true
+- name: update_job_status
+  rest: PUT /external/jobs/{reference}/update_status
+  scope: jobs_rw
+  category: jobs
+  description: Change a job's status. The only reversible write on the surface.
+  mutating: true
+- name: get_job_dependencies
+  rest: GET /external/jobs/dependencies
+  scope: jobs_r
+  category: reference-data
+  description: Fetch the enumerations required to create a job — contract_types, education_levels, experience_levels, remote_levels, salary_currencies, salary_periods, cms_sites_references.
+  mutating: false
+- name: list_languages
+  rest: GET /external/languages
+  scope: jobs_r
+  category: reference-data
+  description: List active languages.
+  mutating: false
+- name: list_professions
+  rest: GET /external/professions
+  scope: jobs_r
+  category: reference-data
+  description: List active professions. DEPRECATED by the provider.
+  mutating: false
+  deprecated: true
+- name: list_departments
+  rest: GET /external/departments
+  scope: departments_r
+  category: org-structure
+  description: List an organization's departments (teams).
+  mutating: false
+- name: get_department
+  rest: GET /external/departments/{id}
+  scope: departments_r
+  category: org-structure
+  mutating: false
+- name: create_department
+  rest: POST /external/departments
+  scope: departments_rw
+  category: org-structure
+  mutating: true
+- name: update_department
+  rest: PUT /external/departments/{id}
+  scope: departments_rw
+  category: org-structure
+  mutating: true
+- name: list_offices
+  rest: GET /external/offices
+  scope: offices_r
+  category: org-structure
+  mutating: false
+- name: get_office
+  rest: GET /external/offices/{id}
+  scope: offices_r
+  category: org-structure
+  mutating: false
+- name: create_office
+  rest: POST /external/offices
+  scope: offices_rw
+  category: org-structure
+  mutating: true
+- name: update_office
+  rest: PUT /external/offices/{id}
+  scope: offices_rw
+  category: org-structure
+  mutating: true
+- name: list_candidates
+  rest: GET /external/candidates
+  scope: candidates_r or my_candidates_rw
+  category: candidates
+  description: List candidates for a job reference. Personal data — see the GDPR note below.
+  mutating: false
+  personal_data: true
+- name: get_candidate
+  rest: GET /external/candidates/{reference}
+  scope: candidates_r or my_candidates_rw
+  category: candidates
+  mutating: false
+  personal_data: true
+- name: create_candidate
+  rest: POST /external/candidates
+  scope: candidates_rw or my_candidates_rw
+  category: candidates
+  description: Create a candidate against a job reference. Irreversible — no delete or erasure endpoint is published.
+  mutating: true
+  personal_data: true
+- name: update_candidate
+  rest: PUT /external/candidates/{reference}
+  scope: candidates_rw or my_candidates_rw
+  category: candidates
+  mutating: true
+  personal_data: true
+- name: create_comment
+  rest: POST /external/comments
+  scope: comments_w
+  category: candidates
+  description: Add a comment to a candidate. Irreversible — no delete or edit endpoint.
+  mutating: true
+  personal_data: true
+- name: list_candidate_emails
+  rest: GET /external/emails
+  scope: emails_r
+  category: candidates
+  mutating: false
+  personal_data: true
+- name: create_candidate_email
+  rest: POST /external/emails
+  scope: emails_rw
+  category: candidates
+  description: Send an email to a candidate. Highest-consequence irreversible write on the surface.
+  mutating: true
+  personal_data: true
+  high_consequence: true
+- name: list_candidate_documents
+  rest: GET /external/documents
+  scope: documents_r
+  category: candidates
+  mutating: false
+  personal_data: true
+- name: attach_candidate_documents
+  rest: POST /external/documents
+  scope: documents_rw
+  category: candidates
+  mutating: true
+  personal_data: true
+- name: get_current_user
+  rest: GET /external/users/current
+  scope: me_r
+  category: identity
+  mutating: false
+- name: get_organization
+  rest: GET /external/organizations/{reference}
+  scope: organizations_r
+  category: employer-branding
+  mutating: false
+- name: list_organizations
+  rest: GET /external/organizations
+  scope: su_organizations_r
+  category: employer-branding
+  description: Look up organizations by name, website URL or CMS site reference. Partnership-gated.
+  mutating: false
+- name: list_images
+  rest: GET /external/images
+  scope: images_r or su_images_r
+  category: employer-branding
+  mutating: false
+- name: list_videos
+  rest: GET /external/videos
+  scope: videos_r or su_videos_r
+  category: employer-branding
+  mutating: false
+- name: get_embed
+  rest: GET /api/v1/embed
+  scope: organizations_r
+  category: employer-branding
+  description: Fetch the data needed to build a careers-site widget from an organization's jobs and profile. Note this endpoint sits at /api/v1/embed, outside the /external prefix.
+  mutating: false
+- name: list_tools
+  rest: GET /external/tools
+  scope: organizations_r
+  category: reference-data
+  description: List the Welcome to the Jungle tools taxonomy.
+  mutating: false
+- name: list_sectors
+  rest: GET /external/sectors
+  scope: organizations_r
+  category: reference-data
+  mutating: false
+- name: list_moves
+  rest: GET /external/moves
+  scope: moves_r
+  category: analytics
+  description: Candidate pipeline stage transitions, for dashboards and funnel analysis.
+  mutating: false
+  personal_data: true
+- name: list_wttj_articles
+  rest: GET /external/cms/articles/all
+  scope: cms_articles_r
+  category: media
+  description: Retrieve articles published on the Welcome to the Jungle media site. Partnership-gated.
+  mutating: false
+tool_count: 36
+graphql_note: 'A first-party GraphQL API also exists at https://api.welcomekit.co/api/v1/graphql with a
+  fully introspectable schema (see graphql/welcome-to-the-jungle-graphql.yml). It is the better foundation
+  for a real MCP server than the REST docs, because its typed inputs give every tool a genuine inputSchema
+  — which the REST surface cannot, having no OpenAPI. The 17 GraphQL-only capabilities and 15 REST-only
+  operations are enumerated in mcp/welcome-to-the-jungle-tool-crosswalk.yml.'
+crosswalk: mcp/welcome-to-the-jungle-tool-crosswalk.yml
+agent_cautions:
+- 'Ten of these candidate tools mutate, and only update_job_status has a reversal. No idempotency mechanism exists, so a retried create_candidate, create_comment or create_candidate_email produces a duplicate.'
+- 'Eleven tools touch candidate personal data under GDPR. There is no published erasure or anonymisation endpoint, so an agent cannot undo a personal-data write through the API.'
+- 'No rate limits are published and no 429 is documented; an agent has no backoff signal.'

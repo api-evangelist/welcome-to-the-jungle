@@ -1,0 +1,41 @@
+generated: '2026-09-04'
+method: searched
+source: https://developers.welcomekit.co/ (complete documentation set, fetched as llms-full.txt 2026-09-04) plus a live unauthenticated response from https://www.welcomekit.co/api/v1/external/jobs
+api: Welcome to the Jungle Solutions API
+limit_count: 0
+summary: 'Welcome to the Jungle Solutions publishes no rate limits for its API. The full documentation
+  set contains no rate-limit, quota or throttling section, the status-code table stops at 503 and does
+  not list 429, and a live response from the API host returned no rate-limit headers of any family. An
+  integrator cannot size a polling loop from published information, and an agent has no runtime signal
+  telling it to back off before it is cut off.'
+limits: []
+response_headers:
+  documented: []
+  observed: []
+  observed_on:
+    request: GET https://www.welcomekit.co/api/v1/external/jobs
+    status: 400
+    date: '2026-09-04'
+    headers_present:
+    - x-request-id
+    - x-runtime
+    - cache-control
+    - strict-transport-security
+    - access-control-allow-origin
+    note: 'No X-RateLimit-Limit / X-RateLimit-Remaining / X-RateLimit-Reset, no RFC 9239-style
+      RateLimit / RateLimit-Policy, and no Retry-After were returned.'
+status_on_exhaustion: null
+retry_after: null
+documented_status_codes:
+- 400
+- 401
+- 403
+- 404
+- 405
+- 500
+- 503
+note_429_absent: 429 Too Many Requests does not appear in the published status-code table.
+polling_guidance_published: false
+note: 'This matters more than usual here because the API has no webhooks or event surface: the documented
+  synchronisation pattern is polling GET /jobs and GET /candidates with created_after / updated_after /
+  published_after, and the docs give no guidance on how often that may be done.'

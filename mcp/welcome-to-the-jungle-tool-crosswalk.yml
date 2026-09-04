@@ -1,0 +1,251 @@
+generated: '2026-09-04'
+method: derived
+source: 'graphql/welcome-to-the-jungle.graphql (probed introspection, 2026-09-04) and https://developers.welcomekit.co/ (documented REST surface, captured in llms/welcome-to-the-jungle-llms.txt)'
+summary: 'Welcome to the Jungle runs TWO overlapping-but-non-identical projections of one recruiting data
+  core: a documented REST API at www.welcomekit.co/api/v1/external and an undocumented GraphQL API at
+  api.welcomekit.co/api/v1/graphql. Neither is a superset. This crosswalk records the union so the
+  divergence is data rather than something a reader has to rediscover. Binding is by resource name and
+  semantics, NOT by operationId — the provider publishes no OpenAPI document, so no operationId exists to
+  bind to and every confidence value below reflects that.'
+surfaces:
+  openapi:
+    present: false
+    note: 'No OpenAPI or Swagger document is served on any Welcome to the Jungle host. Probed 2026-09-04:
+      /openapi.json, /openapi.yaml, /swagger.json, /v1/openapi.json, /api-docs, /docs and /redoc all miss
+      on api.welcomekit.co (JSON 404) and developers.welcomekit.co (HTML shell 404).'
+  rest:
+    base_url: https://www.welcomekit.co/api/v1/external
+    docs: https://developers.welcomekit.co/
+    operation_count: 36
+    gated: 'Bearer token issued out of band; su_* / cms_* operations additionally need a partnership.'
+  graphql:
+    endpoint: https://api.welcomekit.co/api/v1/graphql
+    query_count: 36
+    mutation_count: 11
+    introspection: anonymous (open)
+    data_access: gated (every root field returns `unauthorized` without a token)
+    documented: false
+  mcp:
+    url: null
+    status: candidate-only
+    note: No MCP server exists; mcp/welcome-to-the-jungle-mcp.yml is a derived candidate with deployment.mode none.
+crosswalk:
+- tool: list_jobs
+  category: jobs
+  rest:
+  - GET /external/jobs
+  graphql:
+  - jobs
+  binding: name-and-semantics
+  confidence: high
+- tool: get_job
+  category: jobs
+  rest:
+  - GET /external/jobs/{reference}
+  graphql:
+  - job
+  binding: name-and-semantics
+  confidence: high
+- tool: create_job
+  category: jobs
+  rest:
+  - POST /external/jobs
+  graphql:
+  - createJob
+  binding: name-and-semantics
+  confidence: high
+  note: 'Both surfaces can create a job, and the GraphQL CreateJobInput is the only machine-readable
+    description of the required fields that exists.'
+- tool: update_job
+  category: jobs
+  rest:
+  - PUT /external/jobs/{reference}
+  graphql:
+  - updateJob
+  binding: name-and-semantics
+  confidence: high
+- tool: get_job_dependencies
+  category: reference-data
+  rest:
+  - GET /external/jobs/dependencies
+  graphql:
+  - contractTypes
+  - educationLevels
+  - experienceLevels
+  - remotes
+  - salaryCurrencies
+  - salaryPeriods
+  binding: composite
+  confidence: high
+  note: One REST call returns all six enumerations; GraphQL splits them into six separate root fields.
+- tool: list_languages
+  category: reference-data
+  rest:
+  - GET /external/languages
+  graphql:
+  - languages
+  binding: name-and-semantics
+  confidence: high
+- tool: list_professions
+  category: reference-data
+  rest:
+  - GET /external/professions
+  graphql:
+  - professions
+  - profession
+  binding: name-and-semantics
+  confidence: high
+  note: Deprecated on BOTH surfaces — the REST page is titled "(deprecated)" and GraphQL marks Job.profession @deprecated with the same reason.
+- tool: list_departments
+  category: org-structure
+  rest:
+  - GET /external/departments
+  graphql:
+  - departments
+  binding: name-and-semantics
+  confidence: high
+- tool: get_department
+  category: org-structure
+  rest:
+  - GET /external/departments/{id}
+  graphql:
+  - department
+  binding: name-and-semantics
+  confidence: high
+- tool: list_offices
+  category: org-structure
+  rest:
+  - GET /external/offices
+  graphql:
+  - offices
+  binding: name-and-semantics
+  confidence: high
+- tool: get_office
+  category: org-structure
+  rest:
+  - GET /external/offices/{id}
+  graphql:
+  - office
+  binding: name-and-semantics
+  confidence: high
+- tool: list_candidates
+  category: candidates
+  rest:
+  - GET /external/candidates
+  graphql:
+  - candidates
+  binding: name-and-semantics
+  confidence: medium
+  note: 'Both read candidates, but the field sets were not compared — the REST response shape is only
+    shown as a documentation example and the GraphQL Candidate type could not be queried anonymously.'
+- tool: get_candidate
+  category: candidates
+  rest:
+  - GET /external/candidates/{reference}
+  graphql:
+  - candidate
+  binding: name-and-semantics
+  confidence: medium
+- tool: get_current_user
+  category: identity
+  rest:
+  - GET /external/users/current
+  graphql:
+  - currentUser
+  binding: name-and-semantics
+  confidence: high
+- tool: get_organization
+  category: employer-branding
+  rest:
+  - GET /external/organizations/{reference}
+  graphql:
+  - organization
+  - currentOrganization
+  binding: name-and-semantics
+  confidence: medium
+  note: 'currentOrganization is token-scoped and has no REST equivalent; organization takes an argument
+    and is the closer match.'
+- tool: list_organizations
+  category: employer-branding
+  rest:
+  - GET /external/organizations
+  graphql:
+  - organizations
+  binding: name-and-semantics
+  confidence: medium
+  note: REST requires a partnership (su_organizations_r). Whether the GraphQL field carries the same gate could not be established anonymously.
+graphql_only:
+- field: countJobs
+  reason: Cheap count with no REST equivalent — REST requires reading the X-Total header off a full page fetch.
+- field: jobExists
+  reason: Existence check with no REST equivalent.
+- field: salaryBenchmark
+  reason: 'Salary benchmarking, keyed by a FiguresLevel enum (JUNIOR / INTERMEDIATE / SENIOR / STAFF / TEAM_LEAD / HEAD_OF / VP / C_LEVEL). Entirely absent from the documented REST surface.'
+- field: policies
+  reason: 'Per-object permission model (~20 *Policies types) letting a caller check what it may do before attempting a write. No REST analogue at all — this is the single most agent-relevant capability on the GraphQL side.'
+- field: apecIntegration
+  reason: APEC (French executive job board) job-distribution integration. Read plus create/update/enable/disable mutations.
+- field: linkedinIntegration
+  reason: LinkedIn job-distribution integration. Read plus create/update/enable/disable mutations.
+- field: applicationFields
+  reason: ATS application-form field configuration.
+- field: jobRecruiters
+  reason: Recruiter assignment on a job.
+- field: jobRecruiter
+  reason: Single recruiter assignment.
+- field: jobWithServices
+  reason: Job joined with its distribution services.
+- field: jobsWithServices
+  reason: Job list joined with distribution services.
+- field: websiteOrganizations
+  reason: Careers-website organization configuration.
+- field: websiteOrganizationJobs
+  reason: Jobs published to a careers website.
+- field: currentOrganizationMember
+  reason: Token-scoped organization membership.
+- field: users
+  reason: Organization user list.
+- field: remotes
+  reason: 'Remote-level enumeration as a first-class root field (REST folds it into /jobs/dependencies).'
+- field: pinOrganizationMemberJob
+  reason: Mutation with no REST equivalent.
+rest_only:
+- operation: PUT /external/jobs/{reference}/update_status
+  reason: 'Job status transition. GraphQL has createJob and updateJob but no status-transition mutation — the one reversible write on the REST surface has no GraphQL counterpart.'
+- operation: GET /external/jobs/all
+  reason: Cross-organization job listing (partnership-gated).
+- operation: POST /external/departments, PUT /external/departments/{id}
+  reason: GraphQL reads departments but ships no department mutations.
+- operation: POST /external/offices, PUT /external/offices/{id}
+  reason: GraphQL reads offices but ships no office mutations.
+- operation: POST /external/candidates, PUT /external/candidates/{reference}
+  reason: GraphQL exposes candidates as reads only.
+- operation: POST /external/comments
+  reason: Candidate comments — REST only.
+- operation: GET /external/emails, POST /external/emails
+  reason: Candidate emails — REST only.
+- operation: GET /external/documents, POST /external/documents
+  reason: Candidate documents — REST only.
+- operation: GET /external/images
+  reason: Employer-branding images — REST only.
+- operation: GET /external/videos
+  reason: Employer-branding videos — REST only.
+- operation: GET /api/v1/embed
+  reason: Careers-site embed payload — REST only, and outside the /external prefix.
+- operation: GET /external/tools
+  reason: Tools taxonomy — REST only.
+- operation: GET /external/sectors
+  reason: Sectors taxonomy — REST only.
+- operation: GET /external/moves
+  reason: Analytics pipeline moves — REST only.
+- operation: GET /external/cms/articles/all
+  reason: WTTJ media articles — REST only (partnership-gated).
+coverage:
+  rest_operations: 36
+  graphql_fields: 47
+  mapped_pairs: 16
+  graphql_only: 17
+  rest_only: 15
+  note: 'Overlap is roughly 44% of the REST surface. The two surfaces were clearly built for different
+    jobs: REST is the ATS-synchronisation and employer-branding partner API, GraphQL is the internal
+    application API for the Welcome ATS product. An integrator cannot pick one and get everything.'

@@ -1,0 +1,59 @@
+generated: '2026-09-04'
+method: searched
+source: https://developers.welcomekit.co/authentication
+docs: https://developers.welcomekit.co/authentication
+api: Welcome to the Jungle Solutions API
+base_url: https://www.welcomekit.co/api/v1/external
+summary: 'The Solutions API is protected by OAuth bearer access tokens with a published scope model.
+  Tokens are not self-service: access is requested through the Welcome to the Jungle help form and the
+  vendor grants the scopes matching the stated use case. There is no OpenAPI document, so this profile
+  is read from the published authentication and scopes pages rather than derived from securitySchemes.'
+schemes:
+- id: oauth_bearer_header
+  type: http
+  scheme: bearer
+  in: header
+  parameter: Authorization
+  format: 'Authorization: Bearer WK_API_KEY'
+  primary: true
+  description: Preferred transport. The OAuth access token is sent in the Authorization request header.
+- id: oauth_query_token
+  type: apiKey
+  in: query
+  parameter: access_token
+  format: '?access_token=WK_API_KEY'
+  primary: false
+  description: 'Documented alternative — the same OAuth access token passed as a query-string parameter.
+    Query-string credentials leak into proxy and server logs and into browser history; the header form
+    should be preferred by any integration that can set headers.'
+  caution: credential-in-url
+token_acquisition:
+  self_service: false
+  flow: manual-grant
+  request_url: https://help.welcometothejungle.com/
+  description: 'No developer console issues keys. The docs state you must request an authentication
+    token through the help form and explain your use case; the vendor then opens the appropriate scopes.
+    Several endpoints (GET /jobs/all, GET /organizations, GET /cms/articles/all) additionally require a
+    dedicated partnership agreement before the su_* / cms_* scopes are granted.'
+scopes_artifact: scopes/welcome-to-the-jungle-scopes.yml
+oauth_flows_documented: false
+oauth_metadata_endpoints:
+  authorization_server: null
+  protected_resource: null
+  note: 'Probed 2026-09-04 — /.well-known/oauth-authorization-server and /.well-known/openid-configuration
+    return 404 on www.welcomekit.co, api.welcomekit.co and developers.welcomekit.co. The API uses OAuth
+    scope vocabulary and bearer tokens but publishes no RFC 8414 / OIDC discovery document, and no
+    authorization or token endpoint is documented — tokens are issued out of band.'
+failure_modes:
+- status: 401
+  error: unauthorized
+  meaning: The OAuth access_token is wrong or missing.
+- status: 403
+  error: invalid_scope
+  meaning: The token is valid but its scope set does not authorize this resource.
+transport_security:
+  tls_required: true
+  observed_tls: TLSv1.3
+  hsts_on_api_host: false
+  note: 'Observed 2026-09-04 on www.welcomekit.co. TLS 1.3 is served but no Strict-Transport-Security
+    header is returned by the API host; see security/welcome-to-the-jungle-domain-security.yml.'

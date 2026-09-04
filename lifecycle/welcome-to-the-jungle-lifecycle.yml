@@ -1,0 +1,87 @@
+generated: '2026-09-04'
+method: searched
+source: https://developers.welcomekit.co/ , https://status.welcomekit.co/ , https://status.welcometothejungle.com/
+api: Welcome to the Jungle Solutions API
+summary: 'Welcome to the Jungle runs two public status pages — one for the consumer platform and one for
+  the Solutions ATS that backs this API — but publishes no versioning policy, no deprecation policy, no
+  Sunset/Deprecation header commitment, no SLA and no dated API changelog. Deprecation exists in practice
+  and is signalled only in prose inside individual endpoint tables.'
+versioning:
+  scheme: uri-path
+  current_version: v1
+  policy_published: false
+  policy_url: null
+  note: Only v1 has been published since the API was documented; no successor version and no migration guidance exist.
+status_pages:
+- name: WTTJ Solutions ATS
+  url: https://status.welcomekit.co/
+  scope: 'The Solutions ATS platform that serves this API (www.welcomekit.co).'
+  http_status: 200
+  checked: '2026-09-04'
+  machine_readable_feed: null
+  note: JavaScript-rendered status page; no JSON/RSS component endpoint was advertised in the served HTML.
+- name: Welcome to the Jungle
+  url: https://status.welcometothejungle.com/
+  scope: The consumer job board and media platform at welcometothejungle.com.
+  http_status: 200
+  checked: '2026-09-04'
+  machine_readable_feed: null
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  advance_notice: null
+  note: 'No deprecation policy page exists. Deprecations are announced only as inline prose in the
+    endpoint reference, with no date, no removal commitment and no machine-readable signal — a client
+    cannot detect them at runtime.'
+  deprecated_surface:
+  - item: GET /external/professions
+    kind: operation
+    docs: https://developers.welcomekit.co/jobs-api/jobs/get-jobs-dependencies/list-available-professions
+    stated: 'The docs title the page "List available professions (deprecated)".'
+    replacement: null
+    removal_date: null
+  - item: profession_reference
+    kind: field
+    scope: Job create (POST /jobs) and job update (PUT /jobs/{reference}) request bodies.
+    stated: 'Marked "(deprecated)" with the note "This information is not used on our side anymore."'
+    replacement: null
+    removal_date: null
+  - item: is_remote
+    kind: field
+    scope: Job create and job update request bodies.
+    stated: 'Marked "[DEPRECATED] Is remote work authorized for this job?"'
+    replacement: 'The `remote` field, which carries the richer remote_levels enumeration (no / punctual / partial / fulltime).'
+    removal_date: null
+  graphql_deprecations:
+  - item: Job.profession
+    kind: field
+    surface: https://api.welcomekit.co/api/v1/graphql
+    stated: 'Marked @deprecated in the schema with reason "The profession isn''t used on our side anymore." — machine-readable, unlike every REST deprecation.'
+    replacement: null
+    removal_date: null
+    note: 'The GraphQL schema is the ONLY place Welcome to the Jungle signals a deprecation in a form a
+      client can detect at runtime. The same deprecation on the REST side exists only as prose in a table.'
+undocumented_surface:
+  endpoint: https://api.welcomekit.co/api/v1/graphql
+  published_stability_commitment: false
+  note: 'The GraphQL API is live and introspectable but is not described on the developer portal, so it
+    carries no version, no deprecation policy, no change notice and no support commitment. Anything built
+    against it can break without warning.'
+sla:
+  published: false
+  url: null
+  uptime_commitment: null
+  note: No public SLA or uptime commitment for the Solutions API was found on the developer, product or legal pages.
+changelog:
+  published: false
+  url: null
+  note: 'No dated API changelog exists. github.com/WTTJ/wk-api-docs (the previous Slate-based docs site)
+    carries a CHANGELOG.md but the repository has not been pushed to since 2022-05-30 and the live docs
+    have since moved to developers.welcomekit.co, so it does not describe the current API.'
+support:
+  access_request: https://help.welcometothejungle.com/
+  companies_contact: companies@welcometothejungle.com
+  companies_contact_source: https://support.welcometothejungle.com/en/articles/7178536-can-you-connect-with-my-ats
+  help_center: https://help.welcometothejungle.com/en
