@@ -1,0 +1,14 @@
+{
+  "repo": "welcome-to-the-jungle",
+  "feeds": [
+    {
+      "source": "https://help.welcometothejungle.com/en",
+      "feed_url": "https://help.welcometothejungle.com/en",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-09-06T19:17:18Z"
+}
