@@ -1,12 +1,12 @@
 aid: welcome-to-the-jungle
 name: Welcome to the Jungle
-description: 'Welcome to the Jungle is a Paris-headquartered employer-branding and hiring platform. Its
+description: Welcome to the Jungle is a Paris-headquartered employer-branding and hiring platform. Its
   Welcome Hiring Suite bundles Welcome Employer Brand company showcases, Welcome ATS (historically shipped
   as Welcome Kit), Welcome Job Matching and Welcome Sourcing, alongside the welcometothejungle.com job
   board and media property. The company publishes the Welcome to the Jungle Solutions API — a token-gated
   REST API over jobs, departments, offices, candidates, candidate emails, documents, comments, employer-branding
   organizations, images, videos, analytics moves and WTTJ media articles — documented at developers.welcomekit.co
-  and served from www.welcomekit.co/api/v1/external.'
+  and served from www.welcomekit.co/api/v1/external.
 url: https://raw.githubusercontent.com/api-evangelist/welcome-to-the-jungle/refs/heads/main/apis.yml
 image: https://avatars.githubusercontent.com/u/13100706?v=4
 x-type: company
@@ -19,25 +19,41 @@ tags:
 - Human Resources
 - Recruiting
 - Applicant Tracking
+- Job
+- Employer Branding
+- Talent Acquisition
+- HR Tech
+- France
+tags_raw:
+- Company
+- Human Resources
+- Recruiting
+- Applicant Tracking
 - Jobs
 - Employer Branding
 - Talent Acquisition
 - HR Tech
 - France
 apis:
-- aid: welcome-to-the-jungle-solutions-api
+- aid: welcome-to-the-jungle:welcome-to-the-jungle-solutions-api
   name: Welcome to the Jungle Solutions API
-  description: 'REST API over Welcome to the Jungle Solutions recruiting and employer-branding data.
-    Bearer-token (OAuth access token) authentication with a published scope model, JSON request and
-    response bodies, page/per_page pagination and an X-Total count header. Covers the Jobs API (jobs,
-    job dependencies, departments, offices), the Candidates API (candidates, comments, emails, documents,
-    current user), the Employer Branding API (organizations, images, videos, embed, tools, sectors),
-    the Analytics API (moves) and the Media API (WTTJ articles). Several endpoints — list all jobs,
-    list organizations, WTTJ articles — require a dedicated partnership.'
+  description: REST API over Welcome to the Jungle Solutions recruiting and employer-branding data. Bearer-token
+    (OAuth access token) authentication with a published scope model, JSON request and response bodies,
+    page/per_page pagination and an X-Total count header. Covers the Jobs API (jobs, job dependencies,
+    departments, offices), the Candidates API (candidates, comments, emails, documents, current user),
+    the Employer Branding API (organizations, images, videos, embed, tools, sectors), the Analytics API
+    (moves) and the Media API (WTTJ articles). Several endpoints — list all jobs, list organizations,
+    WTTJ articles — require a dedicated partnership.
   humanURL: https://developers.welcomekit.co/
   image: https://avatars.githubusercontent.com/u/13100706?v=4
   baseURL: https://www.welcomekit.co/api/v1/external
   tags:
+  - Job
+  - Candidates
+  - Recruiting
+  - Employer Branding
+  - Applicant Tracking
+  tags_raw:
   - Jobs
   - Candidates
   - Recruiting
@@ -64,19 +80,25 @@ apis:
     url: lifecycle/welcome-to-the-jungle-lifecycle.yml
   - type: X-MCPServerCandidate
     url: mcp/welcome-to-the-jungle-mcp.yml
-- aid: welcome-to-the-jungle-welcomekit-graphql
+- aid: welcome-to-the-jungle:welcome-to-the-jungle-welcomekit-graphql
   name: Welcome Kit GraphQL API
-  description: 'Undocumented first-party GraphQL API for the Welcome Kit / Welcome ATS platform, live at
+  description: Undocumented first-party GraphQL API for the Welcome Kit / Welcome ATS platform, live at
     api.welcomekit.co/api/v1/graphql. Anonymous introspection is enabled and returned the complete schema
-    (95 types, 36 queries, 11 mutations) on 2026-09-04, while every data field is authorization-gated. It
-    is the only complete machine-readable contract Welcome to the Jungle publishes, and it exposes
+    (95 types, 36 queries, 11 mutations) on 2026-09-04, while every data field is authorization-gated.
+    It is the only complete machine-readable contract Welcome to the Jungle publishes, and it exposes
     capabilities the documented REST API does not — job counts and existence checks, salary benchmarking,
-    APEC and LinkedIn job-distribution integrations, and a per-object policies/permission model. Not
-    described on the developer portal, so it carries no published stability or support commitment.'
+    APEC and LinkedIn job-distribution integrations, and a per-object policies/permission model. Not described
+    on the developer portal, so it carries no published stability or support commitment.
   humanURL: https://developers.welcomekit.co/
   image: https://avatars.githubusercontent.com/u/13100706?v=4
   baseURL: https://api.welcomekit.co/api/v1/graphql
   tags:
+  - GraphQL
+  - Applicant Tracking
+  - Job
+  - Recruiting
+  - Employer Branding
+  tags_raw:
   - GraphQL
   - Applicant Tracking
   - Jobs
