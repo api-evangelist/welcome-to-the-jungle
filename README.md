@@ -64,68 +64,122 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Welcome to the Jungle is a Paris-headquartered employer-branding and hiring platform. Its Welcome Hiring
-Suite bundles Welcome Employer Brand company showcases, Welcome ATS (historically shipped as Welcome Kit),
-Welcome Job Matching and Welcome Sourcing, alongside the welcometothejungle.com job board and media
-property.
+Welcome to the Jungle is a Paris-headquartered employer-branding and hiring platform. Its Welcome Hiring Suite bundles Welcome Employer Brand company showcases, Welcome ATS (historically shipped as Welcome Kit), Welcome Job Matching and Welcome Sourcing, alongside the welcometothejungle.com job board and media property. The company publishes the Welcome to the Jungle Solutions API — a token-gated REST API over jobs, departments, offices, candidates, candidate emails, documents, comments, employer-branding organizations, images, videos, analytics moves and WTTJ media articles — documented at developers.welcomekit.co and served from www.welcomekit.co/api/v1/external.
 
-## The API
+**Areas:** Company · Human Resources · Recruiting · Applicant Tracking · Job · Employer Branding · Talent Acquisition · France
 
-The company publishes the **Welcome to the Jungle Solutions API** — a token-gated REST API over recruiting
-and employer-branding data.
+## Welcome to the Jungle on APIs.io
 
-- Developer portal / documentation: https://developers.welcomekit.co/
-- Base URL: `https://www.welcomekit.co/api/v1/external`
-- Authentication: OAuth bearer access token (`Authorization: Bearer …`, or `?access_token=…`), issued on
-  request through https://help.welcometothejungle.com/ — there is no self-service key.
-- Surface: Jobs (jobs, dependencies, departments, offices), Candidates (candidates, comments, emails,
-  documents, current user), Employer Branding (organizations, images, videos, embed, tools, sectors),
-  Analytics (moves) and Media (WTTJ articles) — 36 documented operations.
-- Several endpoints (`GET /jobs/all`, `GET /organizations`, `GET /cms/articles/all`) require a dedicated
-  partnership before the `su_*` / `cms_*` scopes are granted.
+Everything profiled for Welcome to the Jungle is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/welcome-to-the-jungle/](https://apis.io/providers/welcome-to-the-jungle/)** — or go straight to one of the APIs or properties below.
 
-## A second, undocumented API
+### APIs (2)
 
-Probing `api.welcomekit.co` turned up a **live first-party GraphQL API** the developer portal never
-mentions:
+- [Welcome to the Jungle Solutions API](https://apis.io/apis/welcome-to-the-jungle/welcome-to-the-jungle-solutions-api/) — REST API over Welcome to the Jungle Solutions recruiting and employer-branding data. Bearer-token (OAuth access token) authentication with a published scope…
+- [Welcome Kit GraphQL API](https://apis.io/apis/welcome-to-the-jungle/welcome-to-the-jungle-welcomekit-graphql/) — Undocumented first-party GraphQL API for the Welcome Kit / Welcome ATS platform, live at api.welcomekit.co/api/v1/graphql. Anonymous introspection is…
 
-- Endpoint: `https://api.welcomekit.co/api/v1/graphql`
-- **Anonymous introspection is enabled** — the complete schema (95 types, 36 queries, 11 mutations) was
-  read with no credential on 2026-09-04 and is saved verbatim in `graphql/`.
-- **Data is authorization-gated** — every root field returns `unauthorized` without a token.
-- It enforces a query-complexity budget of 150 (the standard single-shot IntrospectionQuery is rejected
-  at complexity 181), so the schema was captured by walking `__type(name:)` one type at a time.
+### Published properties
 
-This is the only complete machine-readable contract Welcome to the Jungle publishes, and it is **not the
-same API** as the documented REST surface. 17 GraphQL fields have no REST equivalent — including job
-counts, existence checks, salary benchmarking, APEC and LinkedIn job-distribution integrations, and a
-per-object `policies` permission model — while 15 REST operations have no GraphQL equivalent, notably the
-whole candidate email/document/comment write surface and the job status transition. The divergence is
-enumerated in `mcp/welcome-to-the-jungle-tool-crosswalk.yml`.
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Because it is undocumented, it carries no published version, deprecation policy, change notice or support
-commitment. Treat it as reachable, not as supported.
+#### MCP servers (1)
 
-## What this profile found
+Model Context Protocol servers that expose the API to agents.
 
-**Published, and captured here:** a live introspectable GraphQL schema, a complete 29-scope OAuth scope reference, an error-code registry, a
-documented `page` / `per_page` + `X-Total` pagination model, incremental-sync filters
-(`created_after` / `updated_after` / `published_after`), two public status pages, an `llms.txt` on the
-docs host, a GDPR / UK GDPR privacy program with a named DPO, and an actively maintained open-source
-React design system (`welcome-ui`).
+- [welcome-to-the-jungle-mcp.yml](https://apis.io/servers/welcome-to-the-jungle/welcome-to-the-jungle-mcp-yml/)
 
-**Not published, recorded as honest absences:** no OpenAPI, Swagger or AsyncAPI document on any host,
-no first-party API client SDK in any package registry, no MCP server, no A2A agent card, no
-`/.well-known/*` document on any host, no webhooks or event surface, no rate limits, no idempotency
-mechanism, no API changelog, no deprecation policy or `Sunset`/`Deprecation` headers, no SLA, no sandbox,
-no CLI, no security.txt, no vulnerability-disclosure program and no trust center.
+#### Security (2)
 
-Nothing in this repository was generated to stand in for a contract the provider does not publish. The
-`mcp/` manifest is explicitly a **candidate** (`deployment.mode: none`) derived from the documented REST
-operations, and is pointed at with `X-MCPServerCandidate` rather than `MCPServer` so it cannot read as a
-live agent surface.
+Authentication, trust centre, and vulnerability disclosure.
 
-- Company: https://www.welcometothejungle.com/en
-- Product: https://solutions.welcometothejungle.com/en/
-- Developer docs: https://developers.welcomekit.co/
-- GitHub: https://github.com/WTTJ
+- [Welcome To The Jungle Authentication](https://apis.io/security/welcome-to-the-jungle/welcome-to-the-jungle-authentication/)
+- [Welcome To The Jungle Domain Security](https://apis.io/security/welcome-to-the-jungle/welcome-to-the-jungle-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Welcome To The Jungle Scopes](https://apis.io/scopes/welcome-to-the-jungle/welcome-to-the-jungle-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Welcome To The Jungle Plans Pricing](https://apis.io/plans/welcome-to-the-jungle/welcome-to-the-jungle-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Welcome To The Jungle Rate Limits](https://apis.io/rate-limits/welcome-to-the-jungle/welcome-to-the-jungle-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.welcometothejungle.com/en)
+- [Documentation](https://developers.welcomekit.co/)
+- [Getting started](https://developers.welcomekit.co/master)
+- [API reference](https://developers.welcomekit.co/jobs-api/jobs)
+- [Pricing](https://solutions.welcometothejungle.com/en/pricing)
+- [Sign up](https://myaccount.welcometothejungle.com/signin)
+- [Support](https://help.welcometothejungle.com/en)
+- [Blog](https://solutions.welcometothejungle.com/en/blog)
+- [Terms of service](https://solutions.welcometothejungle.com/en/terms-of-use)
+- [Privacy policy](https://solutions.welcometothejungle.com/en/privacy-policy)
+- [GitHub](https://github.com/WTTJ)
+- [Status](https://status.welcomekit.co/)
+
+## API Evangelist rating
+
+**Kin Score 43.1** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 35.1 |
+| Contract governance | 18.2 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 57.1 |
+| Access clarity | 39.5 |
+
+**Agent readiness 23.7** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | yes |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 39.2** — Employment & Payroll
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/welcome-to-the-jungle/](https://apis.io/providers/welcome-to-the-jungle/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Welcome to the Jungle: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/welcome-to-the-jungle/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
